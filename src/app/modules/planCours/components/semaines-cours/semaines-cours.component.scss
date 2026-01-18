@@ -1,0 +1,70 @@
+/**
+Feuille de style associée au component pour les semaines de cours
+@author Jonathan Carrière
+ */
+
+// Style permettant d'ajouter une bordure et de centrer les semaines de cours
+.rowSemaineCours {
+  border: 3px solid white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+// Style permettant d'ajouter une marge en haut de certains éléments
+.marginTop {
+  margin-top: 1em;
+}
+
+// Style pour les cartes des éléments de compétences
+.carte {
+  min-height: 10em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// Style pour afficher du contenu un à côté de l'autre
+.contenuCote {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+// Style pour le titre dans les cartes des éléments de compétences
+ion-card-title {
+  margin-right: 1em;
+  font-size: 16px;
+}
+
+// Style pour désactiver la couleur de fond pour la liste des cartes
+ion-list {
+  background: transparent;
+}
+
+// Style permettant au header d'un carte de prendre l'ensemble de la largeur disponible
+ion-card-header {
+  width: 100%;
+}
+
+// Style permettant de placer le bouton pour supprimer une élément de compétence à la gauche de la carte
+.btnSupprimer {
+  margin-left: auto;
+}
+
+// Requêtes média permettant d'ajuster l'affichage pour les écrans de petite taille
+@media (max-width: 450px) {
+  ion-card-title {
+    font-size: 14px;
+  }
+}
+@media (max-width: 767px) {
+  .carte {
+    min-height: 0;
+    display: inline-block;
+    flex-direction: inherit;
+    justify-content: normal;
+  }
+}

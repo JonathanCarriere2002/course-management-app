@@ -1,0 +1,71 @@
+<!--
+  Page contenant le formulaire de création ou modification pour un enseignant
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/enseignants">Enseignants</ion-breadcrumb>
+      <ion-breadcrumb>{{formModification ? "Modifier" : "Créer"}} un enseignant</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">{{formModification ? "Modifier" : "Créer"}} un enseignant</h1>
+    <section id="sectionFormulaireEnseignant">
+      <form id="formulaireEnseignant" (ngSubmit)="formModification ? updateEnseignant() : createEnseignant()" [formGroup]="enseignantForm">
+        <ion-row>
+          <ion-col size="12">
+            <ion-label>Nom<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="text" [clearInput]="true" placeholder="Nom" formControlName="nom" errorText="Le nom de l'enseignant est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Prénom<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="text" [clearInput]="true" placeholder="Prénom" formControlName="prenom" errorText="Le prénom de l'enseignant est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Courriel<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="text" [clearInput]="true" placeholder="enseignant@email.qc.ca" formControlName="courriel" errorText="Le courriel de l'enseignant est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Bureau<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="text" [clearInput]="true" placeholder="1.000" formControlName="bureau" errorText="Le bureau de l'enseignant est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Poste :</ion-label>
+            <ion-input type="number" [clearInput]="true" placeholder="1000" formControlName="poste" errorText="Le poste de l'enseignant est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <section class="cartesFormulaire" formArrayName="programmes">
+              <div class="contenuCote">
+                <ion-label>Programmes :</ion-label>
+                <ion-button (click)="ouvrirModalProgrammes()" class="btnPlus"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+              </div>
+              <ion-list>
+                <ion-reorder-group [disabled]="false" (ionItemReorder)="gestionOrdreProgrammes($any($event))">
+                  <ion-card *ngFor="let programme of programmes.controls; let i = index" [formGroupName]="i">
+                    <ion-card-header class="carteDragDrop">
+                      <div class="contenuCote">
+                        <ion-reorder></ion-reorder>
+                        <ion-card-title>{{ programme.value['titre'] }}</ion-card-title>
+                        <ion-button (click)="retirerProgramme(i)" color="danger" class="btnSupprimer"><ion-icon name="trash"></ion-icon></ion-button>
+                      </div>
+                    </ion-card-header>
+                  </ion-card>
+                </ion-reorder-group>
+              </ion-list>
+            </section>
+          </ion-col>
+        </ion-row>
+        <section class="ion-text-center">
+          <section>
+            <ion-button class="btn btnFixe ion-text-wrap" [disabled]="!enseignantForm.valid" type="submit">{{formModification ? "Modifier" : "Créer"}}</ion-button>
+          </section>
+          <section>
+            <ion-button class="btn btnFixe ion-text-wrap" color="danger" (click)="ouvrirModalConfirmerAnnulation()">Annuler</ion-button>
+          </section>
+        </section>
+      </form>
+    </section>
+  </section>
+</ion-content>

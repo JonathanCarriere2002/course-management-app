@@ -1,0 +1,130 @@
+/**
+Feuille de style associée à la page d'accueil
+@author Jonathan Carrière
+ */
+
+// Style pour le logo de l'application
+.logo_application {
+  height: 500px;
+  width: 500px;
+}
+
+// Style pour le contenant du logo de l'application
+.div_logo_application {
+  display: flex;
+  justify-content: center;
+}
+
+// Style permettant de centrer la colonne contenant le logo et la description
+.colonne_description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// Style pour les paragraphes de description de l'application
+.description_application {
+  padding: 0 3em 0 3em;
+  text-align: justify;
+}
+
+// Style permettant d'ajouter du padding pour les deux derniers paragraphes
+.padding_description_application {
+  padding-top: 1em;
+}
+
+// Style pour le titre du formulaire de connexion
+.titre_formulaire_connexion {
+  text-align: center;
+  padding-bottom: 0.5em;
+  font-size: 38px;
+}
+
+// Style pour le formulaire de connexion
+.formulaire_connexion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80vh;
+}
+
+// Style permettant de mettre le lien et le bouton dans le formulaire un par dessus l'autre
+.formulaire_fond {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1em;
+}
+
+// Style pour les inputs du formulaire de connexion
+.input_formulaire_connexion {
+  width: 75%;
+  display: block;
+  margin: 0 auto 1em auto;
+  font-size: 17px;
+}
+
+// Style pour le lien dans le formulaire de connexion
+.link_formulaire_connexion {
+  margin-bottom: 1.5em;
+}
+
+// Style pour le bouton dans le formulaire de connexion
+.button_formulaire_connexion {
+  width: 50%;
+  text-transform: none;
+  font-size: 20px;
+}
+
+// Style pour le titre de l'application dans la description
+.nom_description_application {
+  font-style: italic;
+}
+
+// Style pour le message d'erreur
+.messageErreur {
+  color: #eb445a;
+  font-size: 18px;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  text-align: center;
+  margin-left: 2em;
+  margin-right: 2em;
+  padding-bottom: 1em;
+}
+
+// Requête média permettant d'améliorer l'affichage en mode mobile portrait
+@media (max-width: 991px) and (min-width: 200px) and (orientation: portrait) {
+  .formulaire_connexion {
+    height: 25vh;
+    margin-top: 2em;
+  }
+  .logo_application {
+    height: max-content;
+  }
+  .description_application {
+    padding: 0 1em 3em 1em;
+    text-align: center;
+  }
+  .titre_formulaire_connexion {
+    padding-bottom: 0;
+  }
+  .messageErreur {
+    font-size: 14px;
+    padding-bottom: 0;
+  }
+}
+
+// Requête média permettant d'améliorer l'affichage en mode mobile landscape
+@media (max-width: 991px) and (min-width: 200px) and (orientation: landscape) {
+  .formulaire_connexion {
+    height: 60vh;
+    margin-top: 2em;
+  }
+  .logo_application {
+    height: max-content;
+  }
+  .description_application {
+    padding: 0 1em 3em 1em;
+    text-align: center;
+  }
+}

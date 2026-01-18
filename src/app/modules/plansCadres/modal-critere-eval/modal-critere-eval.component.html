@@ -1,0 +1,114 @@
+<!--  Modal pour ajouter un critère d'évaluation-->
+<!-- @author Jacob Beauregard-Tousignant -->
+
+
+
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title slot="start">{{ idCritere ? 'Modifier' : 'Ajouter' }} un critère d'évaluation</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="critereEvalForm">
+    
+
+    <ion-input
+      id="idCritere"
+      formControlName="id"
+      class="ion-hide">
+    </ion-input>
+
+    <ion-textarea
+      type="text"
+      placeholder="Entrer l'énoncé du critère d'évaluation"
+      formControlName="enonce"
+      label="Énoncé:"
+      errorText="Énoncé requise"
+      id="inputEnonceAjoutCrtitere">
+    </ion-textarea>
+
+
+    <ion-input
+      type="number"
+      min="0"
+      max="100"
+      step="0.1"
+      [clearInput]="true"
+      placeholder="0"
+      formControlName="ponderation"
+      label="Pondération:"
+      errorText="Pondération invalide, mininum 0% et maximum 100%"
+      id="inputPonderationAjoutCrtitere">
+    </ion-input>
+
+
+    <ion-grid>
+      <ion-row class="sectionGenerale">
+        <ion-row>
+          <ion-button id="select-elementCompetence" color="dark" (click)="appelerModalLiaisonElemComp()" class="ion-text-wrap">
+            Éléments de compétence
+          </ion-button>
+        </ion-row>
+
+
+        <ion-row>
+          <ul>
+            <ng-container formArrayName="elementsCompetence">
+              <!-- Référence : https://ramya-bala221190.medium.com/a-simple-example-how-to-implement-nested-formgroups-and-formarrays-in-angular-6f78d7d4b6a3 -->
+              <li *ngFor="let e of elementsCompetence.controls; let i = index">
+                <ion-row  [formGroupName]="i">
+                  <ion-col>
+                    <ion-input
+                      class="ion-hide"
+                      type="number"
+                      formControlName="id"
+                      readonly="true">
+                    </ion-input>
+                    <ion-input
+                      class="ion-hide"
+                      type="number"
+                      formControlName="numero"
+                      readonly="true">
+                    </ion-input>
+                    <ion-textarea
+                      formControlName="texte"
+                      readonly="true"
+                      auto-grow="true"/>
+                  </ion-col>
+                </ion-row>
+              </li>
+
+            </ng-container>
+          </ul>
+        </ion-row>
+
+
+      </ion-row>
+    </ion-grid>
+  </form>
+
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="annulerAjoutCritereEval()">Annuler</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!idCritere" [disabled]="!critereEvalForm.valid" type="submit" form="critereEvalForm" (click)="creerCritereEvaluation(); $event.preventDefault()">Ajouter</ion-button>
+      <ion-button *ngIf="idCritere" [disabled]="!critereEvalForm.valid" type="submit" form="critereEvalForm" (click)="modifierCritere(idCritere); $event.preventDefault()">Modifier</ion-button>
+      <input type="submit" class="ion-page-invisible" [disabled]="!critereEvalForm.valid"/>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-footer>
+
+
+
+
+
+

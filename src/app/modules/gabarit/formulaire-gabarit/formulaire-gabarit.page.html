@@ -1,0 +1,57 @@
+<!--
+  Formulaire permettant d'ajouter ou modifier des sections
+  @author Emeric Chauret
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/liste-gabarits">Gabarits</ion-breadcrumb>
+      <ion-breadcrumb *ngIf="formModif" href='/gabarits/details/{{gabarit.id}}'>{{gabarit.nom}}</ion-breadcrumb>
+      <ion-breadcrumb>{{formModif ? "Modifier" : "Créer"}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">{{formModif ? "Modifier" : "Créer"}} un gabarit</h1>
+    <form (ngSubmit)="formModif ? modifierGabarit() : creerGabarit()" [formGroup]="gabaritForm">
+      <section class="sectionGenerale">
+        <ion-input
+          labelPlacement="floating"
+          type="text"
+          [clearInput]="true"
+          placeholder="Nom"
+          formControlName="nom"
+          errorText="Champ requis">
+          <div slot="label">Nom<ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </section>
+      <section class="cartesFormulaire sectionGenerale" formArrayName="sections">
+        <div class="contenuCote">
+          <ion-label>Sections :</ion-label>
+          <ion-button (click)="ouvrirModalSections()" class="btnPlus"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+        </div>
+        <ion-list>
+          <ion-reorder-group [disabled]="false" (ionItemReorder)="gererRearrangementSections($any($event))">
+            <ion-card *ngFor="let section of sections.controls; let i = index" [formGroupName]="i">
+              <ion-card-header class="carteDragDrop">
+                <div class="contenuCote">
+                  <ion-reorder></ion-reorder>
+                  <ion-card-title>{{ section.value['titre'] }}</ion-card-title>
+                  <ion-button (click)="retirerSection(i)" color="danger" class="btnSupprimer"><ion-icon name="trash"></ion-icon></ion-button>
+                </div>
+              </ion-card-header>
+            </ion-card>
+          </ion-reorder-group>
+        </ion-list>
+      </section>
+      <section class="ion-text-center">
+        <section>
+          <ion-button class="btn btnFixe ion-text-wrap" [disabled]="!gabaritForm.valid" type="submit">{{formModif ? "Modifier" : "Créer"}}</ion-button>
+        </section>
+        <section>
+          <ion-button class="btn btnFixe ion-text-wrap" color="danger" (click)="ouvrirModalConfirmerAnnulation()">Annuler</ion-button>
+        </section>
+      </section>
+    </form>
+  </section>
+</ion-content>

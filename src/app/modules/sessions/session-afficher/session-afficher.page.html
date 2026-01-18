@@ -1,0 +1,45 @@
+<!--
+  Page contenant les détails d'une session
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/sessions">Sessions</ion-breadcrumb>
+      <ion-breadcrumb>{{session.session}} {{session.annee}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">{{session.session}} {{session.annee}}</h1>
+    <p class="ion-text-center">Limite d'abandon: {{session.limite_abandon}}</p>
+    <ion-grid>
+      <ion-row class="sectionMarginBottom">
+        <ion-col class="ion-text-start">
+          <ion-button class="btn btnFixe ion-text-wrap" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])" href='/session/modifier/{{session.id}}'>Modifier</ion-button>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-button class="btn btnFixe ion-text-wrap" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])" color="danger" (click)="confirmSuppression(session)">Supprimer</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h2 class="ion-text-center">Plans-cadres</h2>
+          <p *ngIf="!chargement && session.plansCadres?.length === 0" class="messageErreur">Cette session ne possède pas de plans-cadre</p>
+        </ion-col>
+      </ion-row>
+      <ul class="cards">
+        <li *ngFor="let planCadre of session.plansCadres">
+          <ion-card class="carteListe">
+            <ion-card-header>
+              <ion-card-title>{{assemblerTitrePlanCadrePlanCours(planCadre)}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-float-sm-end">
+              <ion-button class="btn btnFixe ion-text-wrap" href='/plans-cadres/{{planCadre.id}}'>Détails</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </li>
+      </ul>
+    </ion-grid>
+  </section>
+</ion-content>

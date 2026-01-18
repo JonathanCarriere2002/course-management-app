@@ -1,0 +1,41 @@
+<!--
+  Page permettant d'afficher la liste des enseignants
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb>Enseignants</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">Enseignants</h1>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="6" class="ion-no-padding">
+          <ion-searchbar class="ion-no-padding" color="dark" placeholder="Rechercher un enseignant" (ionInput)="rechercher($event)"></ion-searchbar>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="6" class="ion-no-padding">
+          <ion-button class="btn ion-text-wrap ion-float-sm-end" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3, 4])" href='/enseignant/ajouter'>Créer un enseignant</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="rowDeuxCartes">
+        <ng-container *ngFor="let enseignant of enseignantsRecherche">
+          <ion-col size-xs="12" size-sm="6" class="ion-no-padding">
+            <ion-card class="carteListe carteListeDouble">
+              <ion-card-header>
+                <ion-card-title>{{enseignant.nom}}, {{enseignant.prenom}}</ion-card-title>
+                <ion-card-subtitle>{{enseignant.courriel}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content class="ion-float-sm-end">
+                <ion-button class="btn btnFixe ion-text-wrap" href='/enseignant/details/{{enseignant.id}}'>Détails</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+    <p class="messageErreur" *ngIf="!chargement && enseignantsRecherche.length === 0">Aucun enseignant ne correspond à votre requête</p>
+  </section>
+</ion-content>

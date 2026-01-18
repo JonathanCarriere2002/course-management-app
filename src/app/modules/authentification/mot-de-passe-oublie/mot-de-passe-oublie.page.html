@@ -1,0 +1,41 @@
+<!--
+  Formulaire de réinitialisation de mot de passe
+  @author Samir El Haddaji
+  Inspiré de la page de connextion de Jonathan
+-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xl="8" size-lg="8" size-md="12" size-sm="12" class="colonne_description">
+        <div class="div_logo_application">
+          <ion-img class="logo_application" src="assets/images/pcpc_logo.png" alt="Logo de l'application"></ion-img>
+        </div>
+        <div class="instruction">
+          <p>
+            Pour réinitialiser votre mot de passe, veuillez suivre ces étapes simples. </p>
+          <p class="padding_instruction">Saisissez l'adresse e-mail associée à votre compte.
+            Une fois que vous avez soumis votre demande, veuillez vérifier votre boîte de réception,
+            y compris les courriers indésirables, pour un e-mail de réinitialisation de mot de passe.
+            Ouvrez l'e-mail et suivez les instructions fournies, généralement sous la forme d'un lien ou d'un code. </p>
+          <p class="padding_instruction">ous serez redirigé vers une page où vous pourrez choisir un nouveau mot de passe.
+            Après avoir défini le nouveau mot de passe, retournez à l'écran de connexion de l'application et connectez-vous
+            en utilisant votre adresse e-mail et le nouveau mot de passe</p>
+        </div>
+      </ion-col>
+      <ion-col size-xl="4" size-lg="4" size-md="12" size-sm="12">
+        <div class="formulaire_mot_de_passe">
+          <h1 class="titre_formulaire_mot_de_passe">Mot de passe oublié</h1>
+          <ion-label class="message" color="danger">{{ errorMessage }}</ion-label>
+          <ion-label class="message" color="success">{{ successMessage }}</ion-label>
+          <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+            <ion-input formControlName="email" type="email" class="input_formulaire_mot_de_passe" type="email" fill="solid" label="Adresse courriel :" labelPlacement="stacked" errorText="Adresse courriel invalide"  [required]="true"></ion-input>
+            <div class="formulaire_fond">
+              <ion-button class="button_formulaire_mot_de_passe" type="submit">Envoyer</ion-button>
+            </div>
+          </form>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

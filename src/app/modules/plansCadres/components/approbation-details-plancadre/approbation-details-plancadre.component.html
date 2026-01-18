@@ -1,0 +1,61 @@
+<!--
+  Component permettant d'effectuer l'approbation d'un plan-cadre sur la page de détails
+  @author Jonathan Carrière
+-->
+<section class="sectionGenerale">
+  <ion-row>
+    <ion-col size="12">
+      <h2>Statut d'approbation</h2>
+    </ion-col>
+    <ion-col size-xl="6" size-lg="8" size-md="10" size-sm="12" size-xs="12" class="colonneApprobation">
+      <section *ngIf="!planCadre?.approbationDepartement">
+        <ion-button *ngIf="authService.verifierRoleUtilisateurConnecte([1, 4])" class="btnApprobationWarning" color="light" (click)="confirmationApprobation('par le département', 'approuver')">Approuver par le département<ion-icon name="alert-circle-outline"></ion-icon></ion-button>
+      </section>
+      <section *ngIf="planCadre?.approbationDepartement && !planCadre?.approbationComite">
+        <ion-button *ngIf="authService.verifierRoleUtilisateurConnecte([1, 4])" class="btnApprobationWarning" color="light" (click)="confirmationApprobation('par le comité de programme', 'approuver')">Approuver par le comité de programme<ion-icon name="alert-circle-outline"></ion-icon></ion-button>
+      </section>
+      <section *ngIf="planCadre?.approbationDepartement && planCadre?.approbationComite && !planCadre?.depotDirectionEtudes">
+        <ion-button *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])" class="btnApprobationWarning" color="light" (click)="confirmationApprobation('à la direction des études', 'déposer')">Déposer à la direction des études<ion-icon name="alert-circle-outline"></ion-icon></ion-button>
+      </section>
+      <section *ngIf="planCadre?.approbationDepartement && planCadre?.approbationComite && planCadre?.depotDirectionEtudes">
+        <ion-button *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3, 4])" class="btnApprobationSuccess" color="light" disabled="true">Approuvé<ion-icon name="checkmark-circle-outline"></ion-icon></ion-button>
+      </section>
+    </ion-col>
+    <ion-col size-xl="6" size-lg="4" size-md="2" size-sm="12" size-xs="12" class="colonneProgres">
+      <ion-progress-bar [value]="valeurProgressBar" class="barreProgres"></ion-progress-bar>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rangeeInfo">
+    <ion-col size-xs="12" size-sm="4" size-md="7">
+      <ion-text>Approuvé par le département:</ion-text>
+    </ion-col>
+    <ion-col>
+      <ion-text *ngIf="!planCadre?.approbationDepartement" class="texteItalic">Ce plan-cadre n'a pas encore été approuvé par le département.</ion-text>
+      <ion-text *ngIf="planCadre?.approbationDepartement">{{planCadre.approbationDepartement | date:'yyyy-MM-dd'}}</ion-text>
+      <ion-button *ngIf="planCadre?.approbationDepartement && !planCadre?.approbationComite && !planCadre?.depotDirectionEtudes && authService.verifierRoleUtilisateurConnecte([1, 4])" color="light" class="ion-float-end" (click)="suppressionApprobation('d\'approbation par le département', 'departement')"><ion-icon name="trash"></ion-icon></ion-button>
+      <ion-button *ngIf="planCadre?.approbationDepartement && authService.verifierRoleUtilisateurConnecte([1, 4])" class="ion-float-end" color="light" (click)="modificationApprobation('d\'approbation par le département', 'departement')"><ion-icon name="calendar"></ion-icon></ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rangeeInfo">
+    <ion-col size-xs="12" size-sm="4" size-md="7">
+      <ion-text>Approuvé par le comité de programme:</ion-text>
+    </ion-col>
+    <ion-col>
+      <ion-text *ngIf="!planCadre?.approbationComite" class="texteItalic">Ce plan-cadre n'a pas encore été approuvé par le comité de programme.</ion-text>
+      <ion-text *ngIf="planCadre?.approbationComite">{{planCadre.approbationComite | date:'yyyy-MM-dd'}}</ion-text>
+      <ion-button *ngIf="planCadre?.approbationComite && !planCadre?.depotDirectionEtudes && authService.verifierRoleUtilisateurConnecte([1, 4])" color="light" class="ion-float-end" (click)="suppressionApprobation('d\'approbation par le comité de programme', 'comite')"><ion-icon name="trash"></ion-icon></ion-button>
+      <ion-button *ngIf="planCadre?.approbationComite && authService.verifierRoleUtilisateurConnecte([1, 4])" class="ion-float-end" color="light" (click)="modificationApprobation('d\'approbation par le comité de programme', 'comite')"><ion-icon name="calendar"></ion-icon></ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rangeeInfo">
+    <ion-col size-xs="12" size-sm="4" size-md="7">
+      <ion-text>Déposé à la direction des études:</ion-text>
+    </ion-col>
+    <ion-col>
+      <ion-text *ngIf="!planCadre?.depotDirectionEtudes" class="texteItalic">Ce plan-cadre n'a pas encore été déposé à la direction des études.</ion-text>
+      <ion-text *ngIf="planCadre?.depotDirectionEtudes">{{planCadre.depotDirectionEtudes | date:'yyyy-MM-dd'}}</ion-text>
+      <ion-button *ngIf="planCadre?.depotDirectionEtudes && authService.verifierRoleUtilisateurConnecte([1, 2, 3])" color="light" class="ion-float-end" (click)="suppressionApprobation('de dépôt à la direction des études', 'direction')"><ion-icon name="trash"></ion-icon></ion-button>
+      <ion-button *ngIf="planCadre?.depotDirectionEtudes && authService.verifierRoleUtilisateurConnecte([1, 2, 3])" class="ion-float-end" color="light" (click)="modificationApprobation('de dépôt à la direction des études', 'direction')"><ion-icon name="calendar"></ion-icon></ion-button>
+    </ion-col>
+  </ion-row>
+</section>

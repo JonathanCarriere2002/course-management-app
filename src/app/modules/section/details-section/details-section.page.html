@@ -1,0 +1,62 @@
+<!--
+  Page contenant les détails d'un gabarit
+  @author Emeric Chauret
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/liste-sections">Sections</ion-breadcrumb>
+      <ion-breadcrumb>{{section.titre}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">{{section.titre}}</h1>
+    <ion-grid>
+      <ion-row class="sectionMarginBottom">
+        <ion-col class="ion-text-start">
+          <ion-button class="btn btnFixe ion-text-wrap" href='/modifier-section/{{section.id}}'>Modifier</ion-button>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-button class="btn btnFixe ion-text-wrap" color="danger" (click)="ouvrirModalConfirmerSuppression(section)">Supprimer</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <section class="sectionGenerale">
+      <ion-grid>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="3" size-lg="5">
+            <ion-text>Titre :</ion-text>
+          </ion-col>
+          <ion-col size-xs="12" size-sm="8" size-md="9" size-lg="7">
+            <ion-text>{{section.titre}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="3" size-lg="5">
+            <ion-text>Informations supplémentaires :</ion-text>
+          </ion-col>
+          <ion-col size-xs="12" size-sm="8" size-md="9" size-lg="7">
+            <ion-text>{{section.info_suppl ? section.info_suppl : "Aucune"}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="3" size-lg="5">
+            <ion-text>Obligatoire :</ion-text>
+          </ion-col>
+          <ion-col size-xs="12" size-sm="8" size-md="9" size-lg="7">
+            <ion-text>{{section.obligatoire ? "Oui" : "Non"}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="3" size-lg="5">
+            <ion-text>Aide :</ion-text>
+          </ion-col>
+          <ion-col size-xs="12" size-sm="8" size-md="9" size-lg="7">
+            <quill-view [content]="section.aide ? section.aide : 'Aucune'"></quill-view>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+  </section>
+</ion-content>

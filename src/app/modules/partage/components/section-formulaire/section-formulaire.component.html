@@ -1,0 +1,24 @@
+<!-- @author Emeric Chauret -->
+<ng-container [formGroup]="formGroup">
+  <ng-container [formArrayName]="formArrayName">
+    <ng-container [formGroupName]="index">
+      <ion-label>{{section.titre}}<ion-text *ngIf="section.obligatoire" color="danger">*</ion-text></ion-label>
+      <ion-button class="btnPlus" *ngIf="section.aide" (click)="ouvrirModaleAide(section.aide)"><ion-icon name="information-circle-outline"></ion-icon></ion-button>
+      <quill-editor
+        class="ion-margin-top"
+        formControlName="texte"
+        placeholder="">
+      </quill-editor>
+      <ion-input
+        *ngIf="planCadre"
+        label="Informations supplémentaires:"
+        labelPlacement="floating"
+        type="text"
+        [clearInput]="true"
+        max="20"
+        formControlName="info_suppl"
+        errorText="Informations supplémentaires invalides">
+      </ion-input>
+    </ng-container>
+  </ng-container>
+</ng-container>

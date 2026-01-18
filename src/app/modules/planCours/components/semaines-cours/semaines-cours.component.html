@@ -1,0 +1,67 @@
+<!--
+  Component contenant la section pour les semaines de cours dans le formulaire des plans de cours
+  @author Jonathan Carrière
+-->
+<ng-container [formGroup]="planCoursForm">
+  <ion-label>{{section.titre}}<ion-text color="danger">*</ion-text></ion-label>
+  <ion-button (click)="addSemaineCours()" class="btnPlus">
+    <ion-icon name="add-circle-outline"></ion-icon>
+  </ion-button>
+  <ion-grid [formArrayName]="formArrayName">
+    <ion-row class="rowSemaineCoursContainer">
+      <ion-col *ngFor="let s of formArraySemainesCours.controls; let i = index" [formGroupName]="i" size="12" class="rowSemaineCours" class="sectionGenerale">
+        <ion-row>
+          <ion-col size="12">
+            <ion-label>SEMAINE DE COURS</ion-label>
+            <ion-button (click)="removeSemaineCours(i)" color="danger" class="ion-float-end">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <ion-input labelPlacement="floating" type="number" formControlName="semaineDebut" placeholder="1" clearInput="true" errorText="Le numéro de début de semaine doit être entre 1 et 15">
+              <div slot="label"># début de semaine<ion-text color="danger">*</ion-text></div>
+            </ion-input>
+          </ion-col>
+          <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <ion-input labelPlacement="floating" type="number" formControlName="semaineFin" placeholder="15" clearInput="true" errorText="Le numéro de fin de semaine doit être entre 1 et 15">
+              <div slot="label"># fin de semaine<ion-text color="danger">*</ion-text></div>
+            </ion-input>
+          </ion-col>
+          <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <ion-label>Balises de contenu<ion-text color="danger">*</ion-text></ion-label>
+            <quill-editor class="marginTop" formControlName="contenu" placeholder="Entrer les balises de contenu pour la semaine de cours"></quill-editor>
+          </ion-col>
+          <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <ion-label>Activités et évaluations<ion-text color="danger">*</ion-text></ion-label>
+            <quill-editor class="marginTop" formControlName="activites" placeholder="Entrer les activités et évaluations pour la semaine de cours"></quill-editor>
+          </ion-col>
+          <ion-col size="12" class="marginTop">
+            <ion-label>Éléments de compétences</ion-label>
+            <ion-button (click)="ouvrirModalElementsCompetences(i)" class="btnPlus" [disabled]="!planCadreSelectionne">
+              <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <ion-text *ngIf="!planCadreSelectionne" color="danger">* Veuillez sélectionner un plan-cadre</ion-text>
+          </ion-col>
+        </ion-row>
+        <div formArrayName="elementsCompetences">
+          <ion-list>
+            <ion-row>
+              <ion-col *ngFor="let element of getElementsCompetencesArray(i).controls; let j = index" [formGroupName]="j" size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                <ion-card class="ion-no-margin">
+                  <ion-card-header class="carte">
+                    <ion-card-title>{{ element.value['numero'] + ' - ' + element.value['texte'] }}</ion-card-title>
+                    <ion-button (click)="retirerElementCompetence(i, j)" color="danger" class="btnSupprimer ion-float-sm-end"><ion-icon name="trash"></ion-icon></ion-button>
+                  </ion-card-header>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-container>

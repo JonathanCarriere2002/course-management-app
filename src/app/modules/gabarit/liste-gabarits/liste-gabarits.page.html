@@ -1,0 +1,39 @@
+<!--
+  Page permettant d'afficher la liste des gabarits
+  @author Emeric Chauret
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadcrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb>Gabarits</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">Gabarits</h1>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="6" class="ion-no-padding">
+          <ion-searchbar class="ion-no-padding" placeholder="Rechercher un gabarit" (ionInput)="rechercher($event)"></ion-searchbar>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="6" class="ion-no-padding">
+          <ion-button class="btn ion-text-wrap ion-float-sm-end" href='/formulaire-gabarit'>Créer un gabarit</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ul class="cards">
+      <li *ngFor="let gabarit of gabaritsRecherche">
+        <ion-card class="carteListe">
+          <ion-card-header>
+            <ion-card-title>{{gabarit.nom}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="ion-float-sm-end">
+            <ion-button class="btn btnFixe ion-text-wrap" href='/gabarits/details/{{gabarit.id}}'>Détails</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </li>
+    </ul>
+    <p class="messageErreur" *ngIf="!chargement && gabaritsRecherche.length === 0">Aucun gabarit ne correspond à votre requête</p>
+  </section>
+</ion-content>

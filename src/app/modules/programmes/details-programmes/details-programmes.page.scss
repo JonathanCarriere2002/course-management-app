@@ -1,0 +1,148 @@
+/**
+Feuille de style associée aux détails d'un enseignant
+@author Jonathan Carrière
+ */
+
+// Style pour centrer les titres
+.titre {
+  text-align: center;
+}
+
+// Style pour centrer les titres des sections
+.titreSection {
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+// Style permettant d'ajouter de l'espacement entre les boutons
+.carteBouton {
+  margin-left: 1em;
+  min-width: 110px;
+}
+
+// Style permettant d'ajouter une marge pour les cartes
+.carte {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  height: max-content;
+}
+
+// Style permettant de supprimer les points pour la liste des cartes
+.carteListe {
+  list-style: none;
+}
+
+// Style pour la colonne contenant le bouton pour ajouter
+.colonneAjouter {
+  text-align: right;
+  padding-right: 1em;
+}
+
+// Style pour la colonne contenant la barre  de recherche
+.colonneRechercher {
+  padding-left: 3em;
+}
+
+// Style permettant de définir un minimum pour la hauteur du titre de la carte
+.carteTitre {
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// Style pour le message d'erreur de la recherche
+.messageErreur {
+  color: #eb445a;
+  font-size: 18px;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  text-align: center;
+}
+
+// Style permettant d'ajouter un espacement entres les plans-cadre et plans de cours
+.rangeeListe {
+  margin-bottom: 2em;
+}
+
+// Requête média permettant d'améliorer l'affichage en mode mobile portrait
+@media (max-width: 767px) and (min-width: 200px) {
+  .colonneAjouter {
+    text-align: center;
+    padding: 0;
+  }
+  .colonneRechercher {
+    margin-bottom: 1em;
+    text-align: center;
+    padding: 0;
+  }
+  .titre {
+    text-align: center;
+  }
+}
+
+// Requête média permettant de modifier l'affichage des boutons
+@media (max-width: 1010px) and (min-width: 200px) {
+  .carteBouton {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 1em;
+    font-size: 12px;
+  }
+  .carteBoutons {
+    margin-left: 1em;
+    margin-right: 1em;
+    text-align: center;
+  }
+  .carteTitre {
+    text-align: center;
+  }
+  .carteSousTitre {
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    text-transform: none;
+  }
+  .ion-float-right {
+    width: 100%;
+  }
+}
+
+// Requête média permettant d'ajuster l'affichage pour les écrans de grande taille
+@media (min-width: 768px) {
+  .btnAjouter {
+    width: 250px;
+    margin-left: 1em;
+    text-align: center;
+  }
+  ion-grid {
+    margin-right: 2.5em;
+  }
+}
+
+// Requête média permettant d'ajuster l'affichage pour les écrans de petite taille
+@media (max-width: 767px) {
+  .btnAjouter {
+    width: 60%;
+    margin-left: 1em;
+    text-align: center;
+    font-size: 12px;
+  }
+  .rangeeListe {
+    margin-right: 2.5em;
+  }
+  ion-grid {
+    margin-right: 0;
+  }
+  .messageErreur {
+    font-size: 18px;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}
+
+// Requête média permettant d'ajuster la hauteur pour le titre de la carte
+@media (min-width: 1200px) {
+  .carteTitre {
+    min-height: 0;
+  }
+}

@@ -1,0 +1,53 @@
+<!--
+  Page contenant les liens vers les differents pges
+  @Author Samir el HAddaji
+-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col offset="0.30">
+        <h1>Accueil</h1>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card class="carte" href='/programmes'>
+    <ion-card-header>
+      <ion-card-title class="carteTitre">Programmes</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card class="carte" href='/enseignants'>
+    <ion-card-header>
+      <ion-card-title class="carteTitre">Enseignants</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card class="carte" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])" href='/liste-gabarits'>
+    <ion-card-header>
+      <ion-card-title class="carteTitre">Gabarits</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card class="carte" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])" href='/liste-sections'>
+    <ion-card-header>
+      <ion-card-title class="carteTitre">Sections</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card class="carte" href='/sessions'>
+    <ion-card-header>
+      <ion-card-title class="carteTitre">Sessions</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card class="carte" *ngIf="authService.verifierRoleUtilisateurConnecte([1])" href='/utilisateurs'>
+    <ion-card-header>
+      <ion-card-title class="carteTitre">Utilisateurs</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,43 @@
+<!--
+  Page d'accueil de l'application
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xl="8" size-lg="8" size-md="12" size-sm="12" class="colonne_description">
+        <div class="div_logo_application">
+          <ion-img class="logo_application" src="assets/images/pcpc_logo.png" alt="Logo de l'application"></ion-img>
+        </div>
+        <div class="description_application">
+          <p>Bienvenue sur <span class="nom_description_application">Plan-Cadre – Plan Cours</span>! Cette application
+            correspond à une plateforme de gestion pédagogique complète. Cet outil vous permet de simplifier la création,
+            la coordination ainsi que la gestion de vos plans-cadres et plans de cours.</p>
+          <p class="padding_description_application">Cette application contient un ensemble de fonctionnalités avancées
+            pour la création de plans-cadres, de plans de cours et la gestion d’informations académiques. Vous pouvez créer
+            et personnaliser des documents détaillés, exporter ceux-ci en PDF, envoyer des plans de cours pour approbation,
+            visualiser une vaste quantité d’informations en lien avec le cégep, et bien plus.</p>
+          <p class="padding_description_application">Commencez par vous connecter à votre compte afin de pouvoir profiter
+            des merveilleuses fonctionnalités offertes par <span class="nom_description_application">Plan-Cadre – Plan Cours</span>
+            dès aujourd’hui. Que vous soyez enseignant, coordonnateur de programme ou conseiller pédagogique, cette application vous
+            offre une solution puissante pour améliorer votre travail au quotidien.</p>
+        </div>
+      </ion-col>
+      <ion-col size-xl="4" size-lg="4" size-md="12" size-sm="12">
+        <div class="formulaire_connexion">
+          <h1 class="titre_formulaire_connexion">Connexion</h1>
+          <p class="messageErreur" *ngIf="messageErreur !== ''">{{messageErreur}}</p>
+          <form [formGroup]="connexionForm" (ngSubmit)="connexion()">
+            <ion-input formControlName="email" class="input_formulaire_connexion" type="email" fill="solid" label="Adresse courriel :" labelPlacement="stacked" errorText="Adresse courriel invalide"  [required]="true"></ion-input>
+            <ion-input formControlName="password" class="input_formulaire_connexion" type="password" fill="solid" label="Mot de passe :" labelPlacement="stacked" errorText="Mot de passe invalide" [required]="true"></ion-input>
+            <div class="formulaire_fond">
+              <a class="link_formulaire_connexion" href='/mot-de-passe-oublie'>Oublié votre mot de passe?</a>
+              <ion-button class="button_formulaire_connexion" type="submit">Connexion</ion-button>
+            </div>
+          </form>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

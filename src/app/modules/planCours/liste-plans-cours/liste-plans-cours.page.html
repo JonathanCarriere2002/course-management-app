@@ -1,0 +1,55 @@
+<!--
+  Page permettant d'afficher la liste des plans de cours
+  @author Emeric Chauret
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadcrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/programmes">Programmes</ion-breadcrumb>
+      <ion-breadcrumb href='/details-programmes/{{programme?.id}}'>{{programme?.code}}</ion-breadcrumb>
+      <ion-breadcrumb>Plans de cours</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <div class="ion-text-center ion-margin-bottom">
+      <h1>Plans de cours</h1>
+      <h2>{{programme?.titre}} ({{programme?.code}})</h2>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="6" class="ion-no-padding">
+          <ion-row>
+            <ion-searchbar placeholder="Rechercher un plan de cours" [formControl]="recherche" (ionInput)="filtrerPlansCours()" class="ion-no-padding"></ion-searchbar>
+          </ion-row>
+          <ion-row>
+            <ion-select interface="action-sheet" cancelText="Annuler" [formControl]="filtre" (ionChange)="filtrerPlansCours()">
+              <ion-select-option value="tousPlanCours">Tous les plans de cours</ion-select-option>
+              <ion-select-option value="planCoursApprouves">Plans de cours approuvés</ion-select-option>
+              <ion-select-option value="planCoursNonApprouves">Plans de cours non approuvés</ion-select-option>
+            </ion-select>
+          </ion-row>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="6" class="ion-no-padding" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 4, 5])">
+          <ion-button class="btn ion-text-wrap ion-float-sm-end" href='/programme/{{programmeId}}/plans-cours/creer'>Créer un plan de cours</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ul class="cards">
+      <li *ngFor="let pc of plansCoursAffiches">
+        <ion-card class="carteListe">
+          <ion-card-header>
+            <ion-card-title>{{assemblerTitrePlanCadre(pc.plan_cadre!)}}</ion-card-title>
+            <ion-card-subtitle>Créé par : {{pc.cree_par?.prenom}} {{pc.cree_par?.nom}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="ion-float-sm-end">
+            <app-btn-confirmation-approbation class="btnCarte" [planCours]="pc" [planCoursTitre]="assemblerTitrePlanCadre(pc.plan_cadre!)" (planCoursApprobation)="getPlansCours(programmeId)" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 4])"></app-btn-confirmation-approbation>
+            <ion-button class="btn btnFixe ion-text-wrap" href='/programme/{{programmeId}}/plans-cours/{{pc.id}}'>Détails</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </li>
+    </ul>
+    <p class="messageErreur" *ngIf="!chargement && plansCoursAffiches.length === 0">Aucun plan de cours ne correspond à votre recherche</p>
+  </section>
+</ion-content>

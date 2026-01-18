@@ -1,0 +1,117 @@
+<!--
+  Formulaire permettant d'ajouter ou modifier des plans de cours
+  @author Emeric Chauret
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadcrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/programmes">Programmes</ion-breadcrumb>
+      <ion-breadcrumb href='/programmes/{{programme?.id}}'>{{programme?.code}}</ion-breadcrumb>
+      <ion-breadcrumb href='/programme/{{programmeId}}/plans-cours'>Plans de cours</ion-breadcrumb>
+      <ion-breadcrumb *ngIf="formModif" href='/programme/{{programme?.id}}/plans-cours/{{planCours.id}}'>{{planCours.plan_cadre?.code}}</ion-breadcrumb>
+      <ion-breadcrumb>{{formModif ? "Modifier" : "Créer"}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">{{formModif ? "Modifier" : "Créer"}} un plan de cours</h1>
+    <form (ngSubmit)="formModif ? updatePlanCours() : createPlanCours()" [formGroup]="planCoursForm">
+      <section class="sectionMarginBottom" *ngIf="!this.formModif">
+        <ion-button class="btn ion-text-wrap ion-no-margin" (click)="ouvrirModalPlansCadres()">Choisir un plan-cadre<ion-text color="danger">*</ion-text></ion-button>
+        <ng-container *ngIf="champPlanCadre?.invalid && (champPlanCadre?.dirty || champPlanCadre?.touched)">
+          <p class="messageErreur" *ngIf="champPlanCadre?.errors?.['required']">Champ requis</p>
+        </ng-container>
+      </section>
+      <section *ngIf="champPlanCadre?.value" class="sectionGenerale">
+        <ion-label>Information du cours</ion-label>
+        <p>Titre du cours : {{champPlanCadre?.value ? champPlanCadre?.value["titre"] : ''}}</p>
+        <p>Code du cours : {{champPlanCadre?.value ? champPlanCadre?.value["code"] : ''}}</p>
+        <p class="ion-no-margin ion-margin-top">Pondération : {{champPlanCadre?.value ? champPlanCadre?.value["ponderation"] : ''}}</p>
+      </section>
+      <section class="sectionMarginBottom">
+        <ion-select
+          labelPlacement="floating"
+          fill="outline"
+          formControlName="campus"
+          [compareWith]="comparerCampus"
+          okText="Choisir"
+          cancelText="Annuler">
+          <div slot="label">Campus<ion-text color="danger">*</ion-text></div>
+          <ion-select-option *ngFor="let c of campus" [value]="c">
+            {{c?.nom}}
+          </ion-select-option>
+        </ion-select>
+        <ng-container *ngIf="champCampus?.invalid && (champCampus?.dirty || champCampus?.touched)">
+          <p class="messageErreur" *ngIf="champCampus?.errors?.['required']">Champ requis</p>
+        </ng-container>
+      </section>
+      <section class="sectionMarginBottom">
+        <ion-select
+          labelPlacement="floating"
+          fill="outline"
+          formControlName="session"
+          [compareWith]="comparerSession"
+          okText="Choisir"
+          cancelText="Annuler">
+          <div slot="label">Session<ion-text color="danger">*</ion-text></div>
+          <ion-select-option *ngFor="let s of sessions" [value]="s">
+            {{s?.session}} ({{s?.annee}})
+          </ion-select-option>
+        </ion-select>
+        <ng-container *ngIf="champSession?.invalid && (champSession?.dirty || champSession?.touched)">
+          <p class="messageErreur" *ngIf="champSession?.errors?.['required']">Champ requis</p>
+        </ng-container>
+      </section>
+      <section class="sectionGenerale">
+        <app-enseignants-plan-cours
+          [formGroup]="planCoursForm"
+          formArrayName="enseignants"
+          [enseignants]="lsEnseignants"
+          [enseignantsPlanCours]="planCours.enseignants">
+        </app-enseignants-plan-cours>
+      </section>
+      <ng-container *ngFor="let section of planCours.sections; let i = index">
+        <section *ngIf="section.type_section_id !== 3" class="sectionGenerale">
+          <app-section-formulaire
+            *ngIf="section.type_section_id === 1"
+            [formGroup]="planCoursForm"
+            [index]="i"
+            formArrayName="sections"
+            [section]="section"
+            [planCadre] = false>
+          </app-section-formulaire>
+          <app-semaines-cours *ngIf="section.type_section_id === 2"
+            [planCoursForm]="planCoursForm"
+            [lsElementsCompetences]="lsElementsCompetences"
+            [elementsCompetencesSelectionnes]="elementsCompetencesSelectionnes"
+            [planCours]="planCours"
+            [section]="section"
+            [formModif]="formModif"
+            [formArrayName]="'semaines_cours'"
+            [planCadreSelectionne]="planCadreSelectionne">
+          </app-semaines-cours>
+        </section>
+      </ng-container>
+      <section class="ion-text-center">
+        <div>
+          <ion-button
+            class="btn btnFixe ion-text-wrap"
+            type="submit"
+            [disabled]="!planCoursForm.valid">
+            {{formModif ? "Modifier" : "Créer"}}
+          </ion-button>
+        </div>
+        <div>
+          <ion-button
+            class="btn btnFixe ion-text-wrap"
+            color="danger"
+            (click)="ouvrirModalConfirmerAnnulation()">
+            Annuler
+          </ion-button>
+        </div>
+      </section>
+      <!-- Sinon enter ne fonctionne pas : https://github.com/ionic-team/ionic-framework/issues/19368 -->
+      <input type="submit" class="ion-page-invisible" [disabled]="!planCoursForm.valid"/>
+    </form>
+  </section>
+</ion-content>

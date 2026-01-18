@@ -1,0 +1,95 @@
+/**
+Feuille de style associée à la barre de navigation
+@author Jonathan Carrière  et Samir El HAadaji
+ */
+
+// Style pour le logo de l'application
+.logo_application{
+  height: 60px;
+  width: 100px;
+  padding-left: 15px;
+  padding-right: 30px;
+}
+
+/**
+Ajouter un espacement entre les éléments de la barre de navigation
+ */
+ion-toolbar ion-button {
+  margin: 0.5em;
+}
+
+/**
+Prévenir que les options du menu soient en lettre majuscules
+ */
+ion-label {
+  text-transform: none;
+}
+
+/**
+Ajouter une bordure et un espacement au bas de la barre de navigation
+ */
+.navbar {
+  border-bottom: 1px solid white;
+  margin-bottom: 1em;
+}
+
+/**
+Donner l'apparence d'un 'ion-title' au titre de l'application
+ */
+.ion-title-navbar {
+  color: var(--ion-text-color);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/**
+Requête média permettant d'afficher le bouton pour le menu en mobile
+ */
+@media (min-width: 600px) {
+  ion-menu-button {
+    display: none;
+  }
+}
+
+/**
+Requête média permettant de contrôller la taille du text du menu
+ */
+@media (max-width: 1094px) and (min-width: 996px) {
+  .titre-menu {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .label-menu {
+    font-size: 12px;
+  }
+}
+
+/**
+Requête média permettant de contrôller la taille du text du menu
+ */
+@media (max-width: 996px) and (min-width: 978px) {
+  .titre-menu {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .label-menu {
+    font-size: 12px;
+  }
+}
+
+/**
+Requête média permettant de contrôller la taille du text du menu
+ */
+@media (max-width: 600px) {
+  .label-menu {
+    display: none;
+  }
+}
+
+
+/**
+Séparer le toggle du dark mode de l'icône
+ */
+.toggleDarkMode{
+  margin-top: 0;
+}

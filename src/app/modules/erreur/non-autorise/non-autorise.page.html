@@ -1,0 +1,37 @@
+<app-menu></app-menu>
+
+
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Inaccessible</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <ion-grid class="ion-text-center">
+    <ion-row>
+      <ion-col>
+        <h1>
+          Page inaccessible
+        </h1>
+      </ion-col>
+    </ion-row>
+    <ion-row class="erreur">
+      <ion-col>
+        <ion-text>
+          La page demandée est inaccessible...
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button href='/connexion' color="secondary">
+          Retourner à la page de connexion
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<app-footer></app-footer>

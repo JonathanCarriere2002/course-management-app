@@ -1,0 +1,32 @@
+<!--
+@author Jacob Beauregard-Tousignant
+Modal apparaîssant si une erreur 500 survient
+-->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Erreur</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="centrerModal">
+  <ion-grid>
+    <ion-row class="ion-margin-bottom">
+      <ion-col class="ion-text-center">
+        <h1>Une erreur est survenue</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col class="ion-text-center">
+        <ion-text>{{ message }}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="fermer()" color="danger">Fermer</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

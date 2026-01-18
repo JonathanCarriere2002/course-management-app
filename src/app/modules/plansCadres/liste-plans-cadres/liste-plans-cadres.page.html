@@ -1,0 +1,113 @@
+<!--
+  Page permettant d'afficher la liste des plans cadre
+  @author Jacob Beauregard-Tousignant
+  @author Samir El Haddaji
+  @author Jonathan Carrière
+-->
+
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <main *ngIf="!chargement">
+    <section class="principale">
+      <ion-breadcrumbs [maxItems]="maxBreadcrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+        <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+        <ion-breadcrumb href="/programmes">Programmes</ion-breadcrumb>
+        <ion-breadcrumb href="/details-programmes/{{programme?.id}}" >{{programme?.code}}</ion-breadcrumb>
+        <ion-breadcrumb >Plans-cadres</ion-breadcrumb>
+      </ion-breadcrumbs>
+      <h1 class="ion-text-center">Plans-cadres</h1>
+      <h2 class="ion-text-center">{{programme?.titre}} ({{programme?.code}})</h2>
+        <ion-grid>
+            <ion-row>
+              <ion-col size-xs="12" size-lg="6" class="ion-no-padding">
+                <ion-searchbar show-clear-button="focus" placeholder="Rechercher un plan-cadre" animated="true" class="ion-no-padding" (ionInput)="rechercher($event)"></ion-searchbar>
+                <ion-row>
+                  <ion-select interface="action-sheet" cancelText="Annuler" [(ngModel)]="selectionFiltragePlansCadre" (ionChange)="filtrerPlansCadre()">
+                    <ion-select-option value="tousPlanCadres">Tous les plans-cadres</ion-select-option>
+                    <ion-select-option value="planCadreNonApprouves">Plans-cadres non approuvés</ion-select-option>
+                    <ion-select-option value="planCoursApprouvesDepartement">Plans-cadres approuvés par le département</ion-select-option>
+                    <ion-select-option value="planCoursApprouvesComite">Plans-cadres approuvés par le comité de programme</ion-select-option>
+                    <ion-select-option value="planCoursApprouvesDirection">Plans-cadres déposés à la direction des études</ion-select-option>
+                  </ion-select>
+                </ion-row>
+              </ion-col>
+              <ion-col size-xs="12" size-lg="6" class="ion-no-padding">
+                <ion-row class="ion-justify-content-end">
+                  <ion-col size-lg="6" class="ion-no-padding">
+                    <ion-row>
+                      <ion-col size="12" class="ion-no-padding" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3, 4, 5])">
+                        <ion-button class="btnUnique ion-text-wrap ion-float-sm-end" href = "/programmes/{{programmeId}}/plans-cadres/ajouter" color="primary">Créer un plan-cadre</ion-button>
+                      </ion-col>
+                      <ion-col size="12" class="ion-no-padding">
+                        <ion-button class="btnUnique ion-text-wrap ion-float-sm-end" (click)="exportAllToCsv()" color="light" id="exporterCSV">Exporter en CSV</ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+      <ul class="cards">
+        <li *ngFor="let planCadre of planCadresFiltre">
+          <ion-accordion-group>
+            <ion-accordion value="first">
+              <ion-card class="carteListe" slot="header">
+                <ion-card-header>
+                  <ion-card-title>{{assemblerTitrePlanCadre(planCadre)}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content class="boutonsActionElementListe">
+                  <section>
+                    <ion-row>
+                      <ion-col size-lg="6" size-xs="12" class="ion-no-padding">
+                        <ion-row>
+                          <ion-col size-lg="6" size-xs="12" class="ion-no-padding">
+                            <ion-row class="ion-no-margin ion-no-padding labelColle ion-text-left">
+                              <ion-col class="ion-no-margin ion-no-padding">
+                                <ion-label class="ion-no-margin ion-no-padding">Avancée de l'approbation</ion-label>
+                              </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>
+                                <app-approbation-progressbar [planCadre]="planCadre"></app-approbation-progressbar>
+                              </ion-col>
+                            </ion-row>
+                          </ion-col>
+                          <ion-col size-lg="6" size-xs="12" class="ion-no-padding">
+                            <app-approbation-btn-plancadre [planCadre]="planCadre" [planCadreTitre]="assemblerTitrePlanCadre(planCadre)" (planCadreApprobation)="getPlanCadre()"></app-approbation-btn-plancadre>
+                          </ion-col>
+                        </ion-row>
+                      </ion-col>
+                      <ion-col size-lg="6" size-xs="12" class="ion-no-padding">
+                        <ion-row class="ion-float-lg-end">
+                          <ion-col size="12" class="ion-no-padding">
+                            <ion-button class="btnUnique" fill="solid" (click)="boutonStopPropagation($event);" href='/programmes/{{programmeId}}/plans-cadres/{{planCadre.id}}'>Détails</ion-button>
+                          </ion-col>
+                        </ion-row>
+                      </ion-col>
+
+                    </ion-row>
+                  </section>
+                </ion-card-content>
+              </ion-card>
+              <section slot="content" class="planCadreEtendu ion-padding-start">
+                <h2>{{planCadre.competences.length > 1 ? "Compétences:": "Compétence"}}</h2>
+                <ul *ngIf="planCadre.competences.length>0">
+                  <li *ngFor="let competence of planCadre.competences">
+                    {{competence.competence.enonce}} ({{competence.competence.code}}) - Atteinte {{competence.atteinte}} {{competence.progression}}
+                  </li>
+                </ul>
+                <h3 *ngIf="planCadre.competences.length === 0">Aucune compétence</h3>
+              </section>
+            </ion-accordion>
+          </ion-accordion-group>
+        </li>
+      </ul>
+      <ion-row *ngIf="planCadresFiltre.length === 0 && !chargement">
+        <ion-col size="12">
+          <p class="messageErreur">Aucun plan-cadre ne correspond à votre recherche</p>
+        </ion-col>
+      </ion-row>
+    </section>
+  </main>
+</ion-content>

@@ -1,0 +1,49 @@
+<!-- @author Samir El Haddaji -->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+    <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+    <ion-breadcrumb href="/programmes">Programmes</ion-breadcrumb>
+    <ion-breadcrumb>{{programme.titre}}, {{programme.code}}</ion-breadcrumb>
+  </ion-breadcrumbs>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="titre">{{programme.titre}}, {{programme.code}}</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h2 class="titreSection">Competences</h2>
+        <p *ngIf="programme.competences?.length === 0" class="messageErreur">Ce programme ne possède pas de compétences</p>
+      </ion-col>
+    </ion-row>
+    <ion-row class="rangeeListe">
+      <ion-col *ngFor="let competence of programme.competences" size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+        <ul class="carteListe">
+          <li>
+            <ion-card class="carte">
+              <ion-card-header class="carteHeader">
+                <ion-card-title class="carteTitre">{{ competence.enonce }} ({{ competence.code }})</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="carteContent">
+                  <div class="detail">Énoncé : {{ competence.enonce }}</div>
+                  <div class="detail">Année du devis : {{ competence.annee_devis }}</div>
+                  <div class="detail">Pages du devis : {{ competence.pages_devis }}</div>
+                  <div class="detail">Contexte : {{ competence.contexte }}</div>
+                  <ion-list>
+                    <ion-item *ngFor="let element of competence.elementsCompetences">
+                      <div class="elementTitle">{{ element.numero }}</div>
+                      <div class="elementText">{{ element.texte }}</div>
+                    </ion-item>
+                  </ion-list>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </li>
+        </ul>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

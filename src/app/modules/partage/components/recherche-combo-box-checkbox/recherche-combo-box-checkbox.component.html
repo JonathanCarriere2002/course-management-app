@@ -1,0 +1,38 @@
+<!--
+  Modal permettant d'effectuer la sélection d'objets via des checkbox
+  @author Jacob Beauregard-Tousignant
+  @author Jonathan Carrière
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ titre }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar color="dark" (ionInput)="searchbarInput($event)" placeholder="Rechercher"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content color="light" class="ion-padding">
+  <ion-list *ngIf="objetsFiltres.length !== 0" id="modal-list" [inset]="true">
+    <ion-item *ngFor="let item of objetsFiltres; trackBy: trackItems">
+      <ion-checkbox
+        [value]="item.value"
+        [checked]="isChecked(item.value)"
+        (ionChange)="checkboxChange($event)">
+        {{ item.text }}
+      </ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-text class="ion-text-center" color="danger" *ngIf="objetsFiltres.length === 0">
+    <p>Aucun élément trouvé.</p>
+  </ion-text>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancelChanges()" color="danger">Annuler</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirmChanges()" [strong]="true">Confirmer</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

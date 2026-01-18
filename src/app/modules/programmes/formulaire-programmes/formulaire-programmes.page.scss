@@ -1,0 +1,101 @@
+/**
+Feuille de style associée au formulaire pour les enseignants
+@author Jonathan Carrière
+ */
+
+// Style pour centrer le titre
+.titre {
+  text-align: center;
+}
+
+// Style pour le message des champs requis
+.champsRequis {
+  color: #eb445a;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+// Style pour ajouter du padding au formulaire
+#formulaire {
+  padding: 20px;
+  margin-bottom: 3em;
+}
+
+// Style permettant de centrer les boutons
+#boutonsFormulaire {
+  text-align: center;
+}
+
+// Style permettant de définir la largeur des boutons
+.boutonFormulaire {
+  width: 75%;
+}
+
+// Style pour le bouton de sélection de sections
+.btnPlus {
+  min-width: 5em;
+}
+
+// Style pour ajouter une marge au fond des ion-item
+ion-item {
+  margin-bottom: 16px;
+}
+
+// Style pour rendre les labels des inputs en gras
+ion-label {
+  font-weight: bold;
+}
+
+// Style pour la largeur de la grille pour le formulaire
+ion-grid {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+// Style pour ajouter de l'espacement au dessus des colonnes
+ion-col {
+  padding-top: 1em;
+}
+
+// Style pour les cartes du drag and drop
+.carteDragDrop {
+  display: inline-block;
+}
+
+// Style pour afficher du contenu un à côté de l'autre
+.contenuCote {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+// Style pour le bouton de déplacement pour le drag and drop
+ion-reorder {
+  margin-right: 1em;
+}
+
+// Style pour le titre dans les cartes du drag and drop
+ion-card-title {
+  margin-right: 1em;
+}
+
+// Style pour désactiver la couleur de fond pour la liste des cartes
+ion-list {
+  background: transparent;
+}
+
+// Style permettant au header d'un carte de prendre l'ensemble de la largeur disponible
+ion-card-header {
+  width: 100%;
+}
+
+// Style permettant de placer le bouton pour supprimer une section à la gauche de la carte
+.btnSupprimer {
+  margin-left: auto;
+}
+
+// Requête média permettant d'ajuster l'affichage pour les écrans de petite taille
+@media (max-width: 450px) {
+  ion-card-title {
+    font-size: 14px;
+  }
+}

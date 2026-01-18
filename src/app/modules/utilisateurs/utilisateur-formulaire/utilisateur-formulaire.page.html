@@ -1,0 +1,87 @@
+<!--
+  Page contenant le formulaire de création ou modification pour un utilisateur
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/utilisateurs">Utilisateur</ion-breadcrumb>
+      <ion-breadcrumb>{{formModification ? "Modifier" : "Créer"}} un utilisateur</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">{{formModification ? "Modifier" : "Créer"}} un utilisateur</h1>
+    <p class="ion-text-center messageErreur" *ngIf="formModification">Le mot de passe est seulement requis si vous souhaitez le changer</p>
+    <p class="ion-text-center messageErreur">{{messageErreurCourriel}}</p>
+    <p class="ion-text-center messageErreur">{{messageErreurMotDePasse}}</p>
+    <section id="sectionFormulaireUtilisateur">
+      <form id="formulaireUtilisateur" (ngSubmit)="formModification ? updateUtilisateur() : createUtilisateur()" [formGroup]="utilisateurForm">
+        <ion-row>
+          <ion-col size="12">
+            <ion-label>Nom<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="text" [clearInput]="true" placeholder="Nom" formControlName="nom" errorText="Le nom de l'utilisateur est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Prénom<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="text" [clearInput]="true" placeholder="Prénom" formControlName="prenom" errorText="Le prénom de l'utilisateur est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Courriel<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="text" [clearInput]="true" placeholder="utilisateur@email.qc.ca" formControlName="courriel" errorText="Le courriel de l'utilisateur est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label *ngIf="!formModification">Mot de passe<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-label *ngIf="formModification">Mot de passe :</ion-label>
+            <ion-input type="password" [clearInput]="true" formControlName="mot_de_passe" errorText="Le mot de passe de l'utilisateur est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label *ngIf="!formModification">Confirmer le mot de passe<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-label *ngIf="formModification">Confirmer le mot de passe :</ion-label>
+            <ion-input type="password" [clearInput]="true" formControlName="mot_de_passe_confirmation" errorText="La confirmation du mot de passe de l'utilisateur est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Rôle<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-select interface="popover" placeholder="Veuillez sélectionner un rôle pour l'utilisateur" formControlName="role">
+              <ion-select-option *ngFor="let role of roles" value="{{role.id}}">{{role.nom}}</ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ng-container *ngIf="champRole.value === '4' || champRole.value === '5'">
+            <ion-col size="12">
+              <ion-label>Bureau<sup class="champsRequis">*</sup> :</ion-label>
+              <ion-input type="text" [clearInput]="true" placeholder="1.000" formControlName="bureau" errorText="Le bureau de l'enseignant est invalide" [required]="champRole.value === '4' || champRole.value === '5'"></ion-input>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label>Poste :</ion-label>
+              <ion-input type="number" [clearInput]="true" placeholder="1000" formControlName="poste" errorText="Le poste de l'enseignant est invalide"></ion-input>
+            </ion-col>
+            <ion-col size="12">
+              <section class="cartesFormulaire" formArrayName="programmes">
+                <p>
+                  Programmes<ion-text color="danger">*</ion-text> :
+                  <ion-button (click)="ouvrirModalProgrammes()" class="btnPlus"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+                </p>
+                <ion-list>
+                  <ion-card *ngFor="let programme of programmesSelectionnes; let i = index" [formGroupName]="i">
+                    <ion-card-header>
+                      <ion-card-title class="titreCarteProgramme">{{programme.titre}}</ion-card-title>
+                      <ion-button (click)="supprimerProgrammeFormGroup(i)" color="danger"><ion-icon name="trash"></ion-icon></ion-button>
+                    </ion-card-header>
+                  </ion-card>
+                </ion-list>
+              </section>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+        <section class="ion-text-center">
+          <section>
+            <ion-button class="btn btnFixe ion-text-wrap" [disabled]="!utilisateurForm.valid" type="submit">{{formModification ? "Modifier" : "Créer"}}</ion-button>
+          </section>
+          <section>
+            <ion-button class="btn btnFixe ion-text-wrap" color="danger" (click)="ouvrirModalConfirmerAnnulation()">Annuler</ion-button>
+          </section>
+        </section>
+      </form>
+    </section>
+  </section>
+</ion-content>

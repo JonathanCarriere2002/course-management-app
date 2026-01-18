@@ -1,0 +1,139 @@
+<!--
+  Page permettant d'afficher les détails d'un plan de cours
+  @author Emeric Chauret
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadcrumbs" (ionCollapsedClick)="expandBreadcrumbs()" class="ion-no-padding">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/programmes">Programmes</ion-breadcrumb>
+      <ion-breadcrumb href='/programmes/{{programme?.id}}'>{{programme?.code}}</ion-breadcrumb>
+      <ion-breadcrumb href='/programme/{{programmeId}}/plans-cours'>Plans de cours</ion-breadcrumb>
+      <ion-breadcrumb>{{planCours.plan_cadre?.code}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center" *ngIf="planCours.plan_cadre">
+      {{assemblerTitrePlanCadre(planCours.plan_cadre)}}
+      <ion-text color="warning" *ngIf="!planCours.complet">
+        <ion-icon name="time-outline"></ion-icon>
+      </ion-text><ion-text color="success" *ngIf="planCours.complet">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+      </ion-text>
+    </h1>
+    <ion-grid>
+      <section class="ion-text-end sectionMarginBottom" *ngIf="authService.getUtilisateur().id === planCours.cree_par?.id || authService.verifierRoleUtilisateurConnecte([1])">
+        <ion-button class="btn btnFixe ion-text-wrap" color="light" href='/programme/{{programmeId}}/plans-cours/{{planCoursId}}/modifier'>Modifier</ion-button>
+      </section>
+      <section class="sectionGenerale">
+        <h2>Information du cours</h2>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="7">
+            <ion-text>Campus :</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text>{{planCours.campus?.nom}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="7">
+            <ion-text>Programme :</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text>{{planCours.plan_cadre?.programme?.titre}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="7">
+            <ion-text>Titre du cours :</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text>{{planCours.plan_cadre?.titre}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="7">
+            <ion-text>Code du cours :</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text>{{planCours.plan_cadre?.code}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="7">
+            <ion-text>Pondération :</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text>{{planCours.plan_cadre?.ponderation}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="7">
+            <ion-text>Session :</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text>{{planCours.session?.session}} {{planCours.session?.annee}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <section class="rangeeInfo">
+          <ion-row>
+            <ion-col size-xs="12" size-sm="4" size-md="7">
+              <ion-text>Enseignant(s) :</ion-text>
+            </ion-col>
+            <ion-col *ngIf="planCours.enseignants?.[0]">
+              <ion-text>{{planCours.enseignants[0].nom}} | Groupe : {{planCours.enseignants[0].groupe}} | Dispo : {{planCours.enseignants[0].dispo}}</ion-text>
+            </ion-col>
+          </ion-row>
+          <ng-container *ngFor="let enseignant of planCours.enseignants">
+            <ion-row *ngIf="enseignant !== planCours.enseignants?.[0]">
+              <ion-col offset-xs="0" offset-sm="4" offset-md="7">
+                <ion-text>{{enseignant.nom}} | Groupe : {{enseignant?.groupe}} | Dispo : {{enseignant?.dispo}}</ion-text>
+              </ion-col>
+            </ion-row>
+          </ng-container>
+        </section>
+        <ion-row class="rangeeInfo">
+          <ion-col size-xs="12" size-sm="4" size-md="7">
+            <ion-text>Date limite d'abandon de cours :</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text>{{planCours.session?.limite_abandon}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <app-details-section-approbation [planCours]="planCours" [planCoursTitre]="planCours.plan_cadre ? assemblerTitrePlanCadre(planCours.plan_cadre) : ''" (planCoursApprobation)="getPlanCours(programmeId, planCoursId)"></app-details-section-approbation>
+        <section>
+          <ion-button class="btn btnFixe ion-text-wrap" color="light" href='/programmes/{{programmeId}}/plans-cadres/{{planCours.plan_cadre?.id}}'>Plan-cadre</ion-button>
+        </section>
+      </section>
+      <section class="sectionGenerale" *ngFor="let section of planCours.sections">
+        <app-section-details
+          *ngIf="section.type_section_id === 1"
+          [section]="section">
+        </app-section-details>
+        <ng-container *ngIf="section.type_section_id === 2">
+          <app-tableau-calendrier-activites
+            [titre]="section.titre"
+            [semainesCours]="planCours.semaines_cours">
+          </app-tableau-calendrier-activites>
+        </ng-container>
+        <ng-container *ngIf="section.type_section_id === 3 && planCours.plan_cadre && planCours.plan_cadre?.competences && planCours.plan_cadre?.competences!.length > 0">
+          <h2>{{section.titre}}</h2>
+          <app-tableau-competence
+            [planCadre]="planCours.plan_cadre">
+          </app-tableau-competence>
+        </ng-container>
+      </section>
+      <section class="ion-text-center">
+        <div *ngIf="authService.verifierRoleUtilisateurConnecte([1, 4])">
+          <app-btn-confirmation-approbation class="btn ion-text-wrap" [planCours]="planCours" [planCoursTitre]="planCours.plan_cadre ? assemblerTitrePlanCadre(planCours.plan_cadre) : ''" (planCoursApprobation)="getPlanCours(programmeId, planCoursId)"></app-btn-confirmation-approbation>
+        </div>
+        <div>
+          <app-pdf-plans-cours class="btn ion-text-wrap" [planCours]="planCours"></app-pdf-plans-cours>
+        </div>
+        <div *ngIf="authService.getUtilisateur().id === planCours.cree_par?.id || authService.verifierRoleUtilisateurConnecte([1])">
+          <ion-button class="btn btnFixe ion-text-wrap" color="danger" (click)="ouvrirModalConfirmerSuppression()">Supprimer</ion-button>
+        </div>
+      </section>
+    </ion-grid>
+  </section>
+</ion-content>

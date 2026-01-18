@@ -1,0 +1,39 @@
+<!--
+  Page contenant les détails d'un gabarit
+  @author Emeric Chauret
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/liste-gabarits">Gabarits</ion-breadcrumb>
+      <ion-breadcrumb>{{gabarit.nom}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">{{gabarit.nom}}</h1>
+    <ion-grid>
+      <ion-row class="sectionMarginBottom">
+        <ion-col class="ion-text-start">
+          <ion-button class="btn btnFixe ion-text-wrap" href='/modifier-gabarit/{{gabarit.id}}'>Modifier</ion-button>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-button class="btn btnFixe ion-text-wrap" color="danger" (click)="ouvrirModalConfirmerSuppression(gabarit)">Supprimer</ion-button>
+        </ion-col>
+      </ion-row>
+      <ul class="cards">
+        <li *ngFor="let section of gabarit.sections">
+          <ion-card class="carteListe">
+            <ion-card-header>
+              <ion-card-title>{{section.titre}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-float-sm-end">
+              <ion-button class="btn btnFixe ion-text-wrap" href='/sections/details/{{section.id}}'>Détails</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </li>
+      </ul>
+      <p class="messageErreur" *ngIf="charge && gabarit.sections.length === 0">Ce gabarit ne possède pas de sections</p>
+    </ion-grid>
+  </section>
+</ion-content>

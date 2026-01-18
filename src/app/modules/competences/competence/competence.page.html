@@ -1,0 +1,177 @@
+<!-- @author lebel-->
+<app-menu></app-menu>
+<ion-content [fullscreen]="true">
+
+<ion-header [translucent]="true">
+</ion-header>
+
+<main>
+
+  <ion-breadcrumbs class="ion-margin-start em" [maxItems]="maxBreadcrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+    <ion-breadcrumb href="accueil">Accueil</ion-breadcrumb>
+    <ion-breadcrumb *ngIf="!isNaN(programmeId)" href="programmes">Programmes</ion-breadcrumb>
+    <ion-breadcrumb *ngIf="!isNaN(programmeId)"
+                    href="formulaire-programmes/modifier/{{programmeId}}">Modifier un programme</ion-breadcrumb>
+    <ion-breadcrumb *ngIf="isNaN(programmeId)" href="competences">Compétences</ion-breadcrumb>
+    <ion-breadcrumb>{{ isEditing ? 'Modifier' : 'Créer' }} une compétence</ion-breadcrumb>
+  </ion-breadcrumbs>
+
+  <section class="box_outline">
+    <form [formGroup]="competenceForm">
+
+      <ion-grid>
+
+        <ion-row>
+          <ion-col class="ion-margin-start" size="7">
+            <h1 >{{ isEditing ? 'Modifier' : 'Créer' }} une compétence:</h1>
+            <p class="champsRequis">* Champs requis</p>
+          </ion-col>
+
+          <ion-col size-xs="10" size-sm="2" size-lg="2" class="ion-margin-top ion-margin-end">
+            <ion-button color="primary" *ngIf="isEditing" type="submit" (click)="updateCompetence()" [disabled]="!competenceForm.valid"
+            >Modifier</ion-button>
+            <ion-button color="primary" *ngIf="!isEditing" type="submit" (click)="createCompetence()" [disabled]="!competenceForm.valid"
+            >Créer</ion-button>
+          </ion-col>
+
+          <ion-col *ngIf="isNaN(programmeId)" size-xs="10" size-sm="2" size-lg="2" class="ion-margin-top">
+            <ion-button color="danger" href="/competences">Annuler</ion-button>
+          </ion-col>
+
+          <ion-col *ngIf="!isNaN(programmeId)" size-xs="10" size-sm="2" size-lg="2" class="ion-margin-top">
+            <ion-button color="danger" href="formulaire-programmes/modifier/{{programmeId}}">Annuler</ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-margin" size-xs="10" size-sm="10" size-lg="3">
+              <ion-input
+                labelPlacement="floating"
+                type="text"
+                maxlength="4"
+                [clearInput]="true"
+                placeholder="Code de la compétence"
+                formControlName="code"
+                errorText="Le code doit être composé de 4 caractères"
+              ><div slot="label">
+                Code de la compétence<sup class="champsRequis">*</sup> :
+                </div>
+              </ion-input>
+          </ion-col>
+
+          <ion-col class="ion-margin" size-xs="10" size-sm="10" size-lg="8">
+            <ion-input
+              labelPlacement="floating"
+              type="text"
+              [clearInput]="true"
+              placeholder="Énoncé de la compétence"
+              formControlName="enonce"
+              errorText="L'énoncé de la compétence doit contenir au moins 4 caractères"
+            ><div slot="label">
+                Énoncé de la compétence<sup class="champsRequis">*</sup> :
+              </div>
+            </ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-margin" size-xs="10" size-sm="10" size-lg="3">
+            <div>
+              <ion-input
+                      labelPlacement="floating"
+                      type="text"
+                      [clearInput]="true"
+                      placeholder="Entrez les pages du devis sous un de ces formats 1, 1-5"
+                      formControlName="pages_devis"
+                      errorText="Les pages du devis sont requises"
+              ><div slot="label">
+                Page(s) de Devis<sup class="champsRequis">*</sup> :
+                </div>
+              </ion-input>
+            </div>
+          </ion-col>
+
+          <ion-col class="ion-margin" size-xs="10" size-sm="10" size-lg="8">
+            <ion-input
+                    labelPlacement="floating"
+                    type="text"
+                    maxlength="4"
+                    max="3000"
+                    min="1975"
+                    [clearInput]="true"
+                    placeholder="Année du devis"
+                    formControlName="annee_devis"
+                    errorText="L'année doit être entre 1975 et 3000"
+            ><div slot="label">
+              Année du devis<sup class="champsRequis">*</sup> :
+              </div>
+            </ion-input>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-margin-start ion-margin-top" size-xs="10" size-sm="10" size-lg="11.7">
+            <ion-label>Contexte de réalisation du devis <sup class="champsRequis">*</sup> :</ion-label>
+            <quill-editor
+                    class="ion-margin-top"
+                    formControlName="contexte"
+                    [placeholder]="'Entrez le contexte de la compétence'"
+            ></quill-editor>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+
+      <section class="ion-margin box_outline section-d-a-d">
+        <ion-grid class="ion-margin-bottom em-grid">
+          <ion-row class="ion-justify-content-center em-row">
+            <ion-col size-xs="10" size-sm="4" size-lg="3.5" class="custom-column">
+              <div class="ion-text-center">
+                <h2>Éléments de compétence</h2>
+                <div class="alignement-btn xs-alignement-btn">
+                  <ion-fab>
+                    <ion-fab-button size="small">
+                      <ion-icon
+                              id="ajoutElementCompetence"
+                              (click)="openModalFormulaireElementCompetence()"
+                              name="add"
+                      ></ion-icon>
+                    </ion-fab-button>
+                  </ion-fab>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size-xs="10" size-sm="4" size-lg="3" class="custom-column">
+              <div class="ion-text-center">
+                <h2>Critères de performance</h2>
+                <div class="alignement-btn">
+                  <ion-fab>
+                    <ion-fab-button size="small" [disabled]="competence.elementsCompetences.length === 0">
+                      <ion-icon
+                              id="ajoutCriterePerformance"
+                              (click)="openModalFormulaireCriterePerformance()" name="add"
+                      ></ion-icon>
+                    </ion-fab-button>
+                  </ion-fab>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <section>
+          <app-drag-drop
+                  [lastCritere]="lastCritere"
+                  [lastElement]="competence.elementsCompetences[0]"
+                  [elementCompetences]="competence.elementsCompetences"
+                  (nvEnfantsCompetence)="reception($event)"
+          ></app-drag-drop>
+        </section>
+
+      </section>
+  </section>
+</main>
+</ion-content>
+

@@ -1,0 +1,79 @@
+<app-menu></app-menu>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Programmes</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <main>
+    <app-chargement [etatChargement]="chargement"></app-chargement>
+    <ion-breadcrumbs [maxItems]="maxBreadcrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="liste-programmes">Programmes</ion-breadcrumb>
+    </ion-breadcrumbs>
+
+    <section>
+      <ion-grid>
+        <ion-row>
+          <ion-col offset="0.35">
+            <h1>Programmes</h1>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="colonneRechercher" size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <ion-searchbar  show-clear-button="focus" placeholder="Rechercher un programme" (ionInput)="rechercher($event)"></ion-searchbar>
+          </ion-col>
+          <ion-col class="colonneAjouter" size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <ion-button color="primary" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])" href='/formulaire-programmes/ajouter'>Créer un programme</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+
+    <section class="ion-padding">
+      <ion-grid>
+        <ion-row *ngIf="programmesRecherche.length !== 0">
+          <ion-col *ngFor="let programme of programmesRecherche" size="12" size-md="6" size-lg="4">
+            <ion-card class="programme-card" (click)="redirectToDetails(programme.id)">
+              <ion-card-header>
+                <ion-card-title>{{programme.titre}} ({{programme.code}})</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-button  color="light" class="button-container" (click)="redirectToListePlansCours(programme.id); $event.stopPropagation()">Liste des plans de cours</ion-button>
+                <ion-button  color="light" class="button-container" (click)="redirectToListePlansCadres(programme.id); $event.stopPropagation()">Liste des plans-cadres</ion-button>
+                <ion-accordion-group>
+                  <ion-accordion value="competences" (click)="$event.stopPropagation()">
+                    <ion-item slot="header">
+                      <ion-label>Compétences</ion-label>
+                    </ion-item>
+                    <div slot="content" class="ion-padding">
+                      <ion-list *ngIf="programme.competences && programme.competences.length > 0; else noCompetence">
+                        <ion-item-sliding *ngFor="let competence of programme.competences">
+                          ({{ competence.code }}) {{ competence.enonce }}
+                        </ion-item-sliding>
+                      </ion-list>
+                      <ng-template #noCompetence>
+                        <ion-item-sliding>Aucune compétence</ion-item-sliding>
+                      </ng-template>
+                    </div>
+                  </ion-accordion>
+                </ion-accordion-group>
+                <ion-row>
+                  <ion-col size="9">
+                    <ion-button color="light" expand="full" class="button-container rounded" href='/formulaire-programmes/modifier/{{programme.id}}' (click)="$event.stopPropagation()">Modifier</ion-button>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-button (click)="confirmerSuppression(programme); $event.stopPropagation()" color="danger" expand="full">
+                      <ion-icon name="trash"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+  </main>
+</ion-content>

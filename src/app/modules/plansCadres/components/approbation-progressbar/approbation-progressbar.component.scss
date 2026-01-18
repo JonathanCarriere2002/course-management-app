@@ -1,0 +1,30 @@
+/**
+  Style pour le component permettant d'effectuer la gestion de la barre de progrès pour un plan-cadre
+  @author Jonathan Carrière
+*/
+
+/**
+Style pour le barre de progrès pour l'approbation
+ */
+.barreProgres {
+  margin: 4px 2px;
+  border-radius: 25px;
+}
+
+/**
+Requête média pour la hauteur de la barre de progrès d'approbation
+ */
+@media (min-width: 992px) {
+  .barreProgres {
+    height: 36px;
+  }
+}
+
+/**
+Requête média permettant d'adapter la barre de progrès des plans cadre pour les écrans de petites tailles
+ */
+@media (max-width: 991px) {
+  .barreProgres {
+    height: 18px;
+  }
+}

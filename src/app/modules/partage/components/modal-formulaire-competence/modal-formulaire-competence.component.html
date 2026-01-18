@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{titreModal}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+  <main>
+    <form [formGroup]="formModal">
+      <section class="ion-margin">
+
+        <section *ngIf="titreModal?.includes('élément de compétence')">
+          <ion-input
+                  labelPlacement="floating"
+                  type="text"
+                  placeholder="Entrez le numéro comme suivant '1' ou '1.'"
+                  formControlName="numero"
+                  errorText="Le numéro doit respecter l'un de ces formats '1', '1.' et ne pas commencer par 0"
+          ><div slot="label">
+              Numéro<sup class="champsRequis">*</sup> :
+            </div>
+          </ion-input>
+        </section>
+
+        <section *ngIf="!titreModal?.includes('élément de compétence')">
+          <ion-input
+                  labelPlacement="floating"
+                  type="text"
+                  placeholder="Entrez le numéro comme suivant '1.1' (optionnel)"
+                  formControlName="numero"
+                  errorText="Le numéro doit respecter ce format '1.1', aucun 0 n'est accepté"
+          ><div slot="label">
+              Numéro :
+            </div>
+          </ion-input>
+        </section>
+
+        <section>
+
+          <ion-textarea
+                  labelPlacement="floating"
+                  auto-grow="true"
+                  placeholder="Entrez le texte ici"
+                  formControlName="texte"
+                  errorText="Le texte est requis"
+          ><div slot="label">
+              Texte<sup class="champsRequis">*</sup> :
+            </div>
+          </ion-textarea>
+        </section>
+
+      </section>
+      <section class="button-container ion-margin-top">
+        <ion-button class="ion-margin-horizontal" [disabled]="!formModal.valid" *ngIf="!isEditing" type="submit" (click)="ajout()">Créer</ion-button>
+        <ion-button class="ion-margin-horizontal" [disabled]="!formModal.valid" *ngIf="isEditing" type="submit" (click)="modification()">Modifier</ion-button>
+        <ion-button class="ion-margin-horizontal" color="danger" (click)="fermerModal()">Annuler</ion-button>
+      </section>
+    </form>
+  </main>
+</ion-content>

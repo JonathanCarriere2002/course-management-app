@@ -1,0 +1,21 @@
+/**
+Feuille de style associée au formulaire pour les utilisateurs
+@author Jonathan Carrière
+ */
+
+// Style pour ajouter du padding au formulaire
+#formulaireUtilisateur {
+  padding: 20px;
+  margin-bottom: 3em;
+}
+
+// Style pour la largeur de la grille pour le formulaire
+#sectionFormulaireUtilisateur {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+// Style permettant de centrer le titre pour les cartes de programmes
+.titreCarteProgramme {
+  text-align: center;
+}

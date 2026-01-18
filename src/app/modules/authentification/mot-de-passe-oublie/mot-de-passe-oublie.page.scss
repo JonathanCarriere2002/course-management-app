@@ -1,0 +1,102 @@
+//@author Samir El Haddaji
+//Inspiré de la page de connextion de Jonathan
+
+.logo_application {
+  height: 500px;
+  width: 500px;
+}
+
+.div_logo_application {
+  display: flex;
+  justify-content: center;
+}
+
+.instruction {
+  padding: 0 3em 0 3em;
+  text-align: justify;
+}
+
+.padding_instruction {
+  padding-top: 1em;
+}
+
+.titre_formulaire_mot_de_passe {
+  text-align: center;
+  padding-bottom: 0.5em;
+  font-size: 38px;
+}
+
+.formulaire_mot_de_passe {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80vh;
+}
+
+.formulaire_fond {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1em;
+}
+
+.input_formulaire_mot_de_passe {
+  width: 75%;
+  display: block;
+  margin: 0 auto 1em auto;
+  font-size: 17px;
+}
+
+.link_formulaire_mot_de_passe {
+  margin-bottom: 1.5em;
+}
+
+.button_formulaire_mot_de_passe {
+  width: 50%;
+  text-transform: none;
+  font-size: 20px;
+}
+
+.message {
+  font-size: 18px;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  text-align: center;
+  margin-left: 2em;
+  margin-right: 2em;
+  padding-bottom: 1em;
+}
+
+@media (max-width: 991px) and (min-width: 200px) and (orientation: portrait) {
+  .formulaire_mot_de_passe {
+    height: 25vh;
+    margin-top: 2em;
+  }
+  .logo_application {
+    height: max-content;
+  }
+  .description_application {
+    padding: 0 1em 3em 1em;
+    text-align: center;
+  }
+  .titre_formulaire_mot_de_passe {
+    padding-bottom: 0;
+  }
+  .messageErreur {
+    font-size: 14px;
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 200px) and (orientation: landscape) {
+  .formulaire_mot_de_passe {
+    height: 60vh;
+    margin-top: 2em;
+  }
+  .logo_application {
+    height: max-content;
+  }
+  .instruction {
+    padding: 0 1em 3em 1em;
+    text-align: center;
+  }
+}

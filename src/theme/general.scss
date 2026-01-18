@@ -1,0 +1,251 @@
+/**
+Liste des éléments
+ */
+.cards {
+  padding: 0;
+  list-style-type: none;
+}
+
+/**
+Formulaire
+ */
+
+quill-editor{
+  display: inline-block;
+  width: 100%;
+  height: 20em;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.afficherRichText{
+  white-space: pre-wrap
+}
+
+.afficherRichText{
+  white-space: pre-wrap
+}
+
+.principale {
+  margin: auto;
+  max-width: 950px;
+  padding: 10px;
+}
+
+.alignCenterVertical{
+  align-items: center;
+}
+
+// Style permettant d'ajouter un espacement à côté du bouton 'plus'
+.btnPlus {
+  margin-left: 1em;
+}
+
+/* @author Emeric Chauret */
+@media (max-width: 575.99px) {
+  .btn {
+    width: 100%;
+  }
+}
+@media (min-width: 576px) {
+  .btnFixe {
+    width: 210px;
+  }
+  .listeCartesDeuxCol ion-card-header {
+    height: 8em;
+  }
+  .inlineFlex {
+    display: inline-flex;
+  }
+}
+.listeCartesDeuxCol ion-card-content ion-button {
+  width: 100%;
+}
+
+.sectionGenerale{
+  border-radius: 4px;
+  margin-bottom: 0.5em;
+  padding: 1em;
+  border: 1px solid;
+  border-color: var(--ion-color-step-300, #b3b3b3);
+}
+
+.sectionMarginBottom {
+  margin-bottom: 0.5em;
+}
+
+.rangeeInfo{
+  border-bottom: 1px solid;
+  margin-bottom: 1em;
+  border-color: var(--ion-color-step-300, #b3b3b3);
+}
+
+quill-view .ql-editor {
+  padding: 0;
+}
+
+.messageErreur {
+  margin: 0.3em 0 0 0;
+  color: red;
+  font-size: 0.75rem;
+}
+
+form ion-label, form div[slot="label"] {
+  font-weight: bold;
+}
+
+.iconContainer {
+  display: inline;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnCarte {
+  margin-right: 0.5em;
+}
+
+.carteListe {
+  margin: 0 0 0.5em 0;
+}
+
+.carteListeDouble {
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+
+.champsRequis {
+  color: #eb445a;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+.rowDeuxCartes {
+  margin-top: 0.5em;
+}
+
+ion-breadcrumb::part(native) {
+  padding: 0;
+}
+
+ion-grid {
+  padding: 0;
+}
+/* end @author Emeric Chauret */
+
+
+/* @author Samir El Haddaji */
+.ql-container {
+  color: #0d0d0d;
+  background-color: #fdfdfd;
+}
+
+.ql-toolbar {
+  background-color: #ffffff;
+}
+
+.ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
+  background: white;
+}
+
+.ql-toolbar button{
+  color: white;
+}
+
+.ql-toolbar button:hover {
+  background-color: #ffffff;
+}
+
+/**
+Séparer le toggle du dark mode de l'icône
+ */
+.toggleDarkMode{
+  margin-left: 0.3em;
+  margin-top: 1em;
+}
+
+
+
+/**
+Bouton des pages détails plans cadre et plans de cours
+ */
+.btnUnique{
+  width: 100%;
+}
+
+@media (max-width: 991px) {
+  .btnUnique {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+  }
+}
+
+
+/**
+Style pour les cartes des formulaires contenant du 'drag and drop'
+@author Jonathan Carrière
+ */
+
+// Style pour ajouter une marge au fond des ion-item
+.cartesFormulaire ion-item {
+  margin-bottom: 16px;
+}
+
+// Style pour ajouter une marge au-dessus des boutons
+.cartesFormulaire ion-button {
+  margin-top: 20px;
+}
+
+// Style pour les cartes du drag and drop
+.cartesFormulaire .carteDragDrop {
+  display: inline-block;
+}
+
+// Style pour afficher du contenu un à côté de l'autre
+.cartesFormulaire .contenuCote {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+// Style pour le bouton de déplacement pour le drag and drop
+.cartesFormulaire ion-reorder {
+  margin-right: 1em;
+}
+
+// Style pour le titre dans les cartes du drag and drop
+.cartesFormulaire ion-card-title {
+  margin-right: 1em;
+}
+
+// Style pour désactiver la couleur de fond pour la liste des cartes
+.cartesFormulaire ion-list {
+  background: transparent;
+}
+
+// Style permettant au header d'un carte de prendre l'ensemble de la largeur disponible
+.cartesFormulaire ion-card-header {
+  width: 100%;
+}
+
+// Style permettant de placer le bouton pour supprimer une section à la gauche de la carte
+.cartesFormulaire .btnSupprimer {
+  margin-left: auto;
+}
+
+// Requête média permettant d'ajuster l'affichage pour les écrans de petite taille
+@media (max-width: 450px) {
+  .cartesFormulaire ion-card-title {
+    font-size: 14px;
+  }
+}
+
+/**
+Classe pour cacher des éléments
+ */
+.cacher{
+  display: none;
+}

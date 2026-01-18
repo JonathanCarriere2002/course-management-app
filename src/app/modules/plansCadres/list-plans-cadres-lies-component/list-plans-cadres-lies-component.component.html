@@ -1,0 +1,30 @@
+<section *ngFor="let cours of listPlansCadres" class="rangeeInfo">
+  <!-- Vérifier quel plan-cadre est celui qui est affiché actuellement  -->
+  <ion-row *ngIf="cours.planCadre1.id === planCadre?.id">
+    <ion-col size-xs="12" size-md="9" size-lg="10" size-sm="12">
+      <ion-text class="lienPlansCadres">
+        {{cours.planCadre2.titre}} ({{cours.planCadre2.code}})
+      </ion-text>
+    </ion-col>
+
+    <ion-col size-xs="12" size-sm="12" size-md="2" size-lg="2">
+      <ion-button color="dark" href='/programme/{{planCadre?.programme?.id}}/plans-cadres/{{cours.planCadre2.id}}'>
+        Détails
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="cours.planCadre2.id === planCadre?.id">
+    <ion-col size-xs="12" size-md="9" size-lg="10" size-sm="12">
+      <ion-text class="lienPlansCadres">
+        {{cours.planCadre1.titre}} ({{cours.planCadre1.code}})
+      </ion-text>
+    </ion-col>
+
+    <ion-col size-xs="12" size-sm="12" size-md="2" size-lg="2" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3, 4, 5])">
+      <ion-button color="light" href='/programme/{{planCadre?.programme?.id}}/plans-cadres/{{cours.planCadre1.id}}'>
+        Détails
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</section>

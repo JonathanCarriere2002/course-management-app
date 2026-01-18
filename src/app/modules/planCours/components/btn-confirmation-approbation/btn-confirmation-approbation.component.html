@@ -1,0 +1,6 @@
+<!--
+  Component permettant d'effectuer l'approbation d'un plan de cours
+  @author Jonathan Carrière
+-->
+<ion-button class="btn btnFixe widthBtnApprobation ion-text-wrap" color="light" *ngIf="!planCours?.approbation && authService.verifierRoleUtilisateurConnecte([1, 4])" (click)="confirmationApprobation()">Approuver<ion-icon name="alert-circle-outline"></ion-icon></ion-button>
+<ion-button id="btnApprobationSuccess" class="btn btnFixe widthBtnApprobation ion-text-wrap" color="light" *ngIf="planCours?.approbation && authService.verifierRoleUtilisateurConnecte([1, 4])" disabled="true">Approuvé<ion-icon name="checkmark-circle-outline"></ion-icon></ion-button>

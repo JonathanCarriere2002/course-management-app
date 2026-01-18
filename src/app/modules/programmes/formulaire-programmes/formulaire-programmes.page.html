@@ -1,0 +1,66 @@
+<!-- @author Samir, lebel-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+    <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+    <ion-breadcrumb href="/programmes" >Programme</ion-breadcrumb>
+    <ion-breadcrumb>{{formModification ? "Modifier" : "Créer"}} un programme</ion-breadcrumb>
+  </ion-breadcrumbs>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="titre">{{formModification ? "Modifier" : "Créer"}} un programme</h1>
+        <p class="titre champsRequis">* Champs requis</p>
+      </ion-col>
+    </ion-row>
+    <section id="formulaire">
+      <form (ngSubmit)="formModification ? updateProgramme() : createProgrammeFormulaire()" [formGroup]="programmeForm">
+        <ion-row>
+          <ion-col size="12">
+            <ion-label>Titre<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="text" [clearInput]="true" placeholder="Titre" formControlName="titre" errorText="Le titre du programme est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Code<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="text" [clearInput]="true" placeholder="Code" formControlName="code" errorText="Le code du programme est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12" *ngIf="formModification">
+            <section formArrayName="competences">
+              <ion-row class="contenuCote">
+                  <ion-col>
+                    <div>
+                      <ion-label>Compétences :</ion-label>
+                    </div>
+                    <div class="ion-text-center">
+                      <ion-button (click)="ouvrirModalCompetences()" class="btn">Rechercher</ion-button>
+                      <p>ou</p>
+                      <ion-button href='/programmes/{{programmeId}}/competence/creer' class="btn">Créer une nouvelle compétence</ion-button>
+                    </div>
+                  </ion-col>
+              </ion-row>
+              <ion-list>
+                <ion-reorder-group [disabled]="false" (ionItemReorder)="gestionOrdreCompetences($any($event))">
+                  <ion-card *ngFor="let competences of competences.controls; let i = index" [formGroupName]="i">
+                    <ion-card-header class="carteDragDrop">
+                      <div class="contenuCote">
+                        <ion-reorder></ion-reorder>
+                        <ion-card-title>{{ competences.value['enonce'] }}</ion-card-title>
+                        <ion-button (click)="retirerCompetence(i)" color="danger" class="btnSupprimer"><ion-icon name="trash"></ion-icon></ion-button>
+                      </div>
+                    </ion-card-header>
+                  </ion-card>
+                </ion-reorder-group>
+              </ion-list>
+            </section>
+          </ion-col>
+        </ion-row>
+        <ion-row id="boutonsFormulaire">
+          <ion-col size="12">
+            <ion-button class="boutonFormulaire" [disabled]="!programmeForm.valid" type="submit">{{formModification ? "Modifier" : "Créer"}}</ion-button>
+            <ion-button class="boutonFormulaire" href='/programmes' color="danger">Annuler</ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </section>
+  </ion-grid>
+</ion-content>

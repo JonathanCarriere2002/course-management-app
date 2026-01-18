@@ -1,0 +1,482 @@
+<app-menu></app-menu>
+
+<ion-content [fullscreen]="true">
+
+
+
+
+  <main>
+    <ion-grid>
+      <section id="FormAjoutPlanCadre">
+        <ion-breadcrumbs [maxItems]="5" [itemsBeforeCollapse]="2" [itemsAfterCollapse]="2">
+          <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+          <ion-breadcrumb href="/programmes">Programmes</ion-breadcrumb>
+          <ion-breadcrumb href="/programmes/{{programmeId}}/plans-cadres">Plans-cadres</ion-breadcrumb>
+          <ion-breadcrumb href="/programmes/{{programmeId}}/plans-cadres/{{planCadreId}}" *ngIf="isEditing">{{planCadre?.code}}</ion-breadcrumb>
+          <ion-breadcrumb>{{ isEditing ? 'Modifier' : 'Créer' }}</ion-breadcrumb>
+        </ion-breadcrumbs>
+        <form [formGroup]="planCadreForm">
+          <h1 id="titreFormulairePlanCadre">{{ isEditing ? 'Modifier' : 'Créer' }} un plan-cadre:</h1>
+          <section class="sectionGenerale">
+            <ion-row>
+              <ion-col size="12">
+                <ion-input
+                  labelPlacement="floating"
+                  type="text"
+                  [clearInput]="true"
+                  placeholder="000-0A0-AB"
+                  maxlength="10"
+                  formControlName="code"
+                  errorText="Code invalide">
+                  <div slot="label">Code:<ion-text color="danger">*</ion-text></div>
+                </ion-input>
+
+              </ion-col>
+              <ion-col size="12">
+                <ion-input
+                  labelPlacement="floating"
+                  type="text"
+                  [clearInput]="true"
+                  placeholder="Entrer le titre du cours"
+                  formControlName="titre"
+                  errorText="Titre requis">
+                  <div slot="label">Titre:<ion-text color="danger">*</ion-text></div>
+                </ion-input>
+
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-input
+                  labelPlacement="floating"
+                  type="text"
+                  [clearInput]="true"
+                  placeholder="0-0-0"
+                  maxlength="5"
+                  formControlName="ponderation"
+                  errorText="Podération invalide">
+                  <div slot="label">Pondération:<ion-text color="danger">*</ion-text></div>
+                </ion-input>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input
+                  labelPlacement="floating"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  [clearInput]="true"
+                  placeholder="0.01"
+                  max="20"
+                  formControlName="unites"
+                  errorText="Unités invalides">
+                  <div slot="label">Unités:<ion-text color="danger">*</ion-text></div>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-input
+                  labelPlacement="floating"
+                  type="number"
+                  min="40"
+                  max="100"
+                  [clearInput]="true"
+                  placeholder="40"
+                  formControlName="ponderationFinale"
+                  errorText="Pondération finale invalide">
+                  <div slot="label">Pondération de l'évaluation certificative finale:<ion-text color="danger">*</ion-text></div>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+          </section>
+
+
+
+          <section class="sectionGenerale">
+            <ion-row>
+              <ion-col size-sm="8" size-xs="12">
+                <div class="ion-margin-top">
+                  <ion-label>
+                    Programme:<ion-text color="danger">*</ion-text>
+                  </ion-label>
+                </div>
+              </ion-col>
+
+              <ion-col size-sm="2" offset-sm="1" size-xs="12">
+                <ion-button id="choisirProgramme" (click)="appelerModalProgramme()">Choisir</ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-margin-bottom">
+              <ion-col size="12">
+                <ion-input
+                  type="text"
+                  formControlName="programmeAffichage"
+                  [readonly]="true"
+                  class="ion-text-wrap"
+                  error-text="Veuillez choisir un programme.">
+                </ion-input>
+              </ion-col>
+              <ion-input
+                formControlName="programme"
+                [readonly]="true"
+                class="ion-hide">
+              </ion-input>
+            </ion-row>
+          </section>
+
+
+          <section class="sectionGenerale">
+            <ion-row>
+              <ion-col size-sm="8" size-xs="12">
+                <div class="ion-margin-top">
+                  <ion-label>
+                    Cours préalables:
+                  </ion-label>
+                </div>
+              </ion-col>
+
+              <ion-col size-sm="2" offset-sm="1" size-xs="12">
+                <ion-button id="ajouterPrealable" (click)="appelerModalPlanCadrePrealable()">Choisir</ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ng-container formArrayName="coursLiesPrealables">
+                  <!-- Référence : https://ramya-bala221190.medium.com/a-simple-example-how-to-implement-nested-formgroups-and-formarrays-in-angular-6f78d7d4b6a3 -->
+                  <ng-container *ngFor="let p of prealablesFormArray.controls; let i = index" class="cards">
+
+                    <ion-row  [formGroupName]="i" class="rangeeCritere">
+                      <ion-col size-md="8" size-xs="12">
+                        <ion-input
+                          class="ion-hide"
+                          type="number"
+                          formControlName="id"
+                          readonly="true">
+                        </ion-input>
+
+                        <ion-textarea
+                          type="text"
+                          formControlName="enonce"
+                          readonly="true"
+                          auto-grow="true">
+                        </ion-textarea>
+                      </ion-col>
+
+                      <ion-col size-md="4" size-xs="12">
+                        <ion-radio-group
+                          formControlName="typePrealable"
+                          class="typePrealable">
+                          <ion-item>
+                            <ion-radio value="Absolu">Absolu</ion-radio>
+                          </ion-item>
+                          <ion-item>
+                            <ion-radio value="Relatif">Relatif</ion-radio>
+                          </ion-item>
+                        </ion-radio-group>
+                      </ion-col>
+                    </ion-row>
+                  </ng-container>
+
+                </ng-container>
+              </ion-col>
+
+            </ion-row>
+
+          </section>
+
+
+          <section class="sectionGenerale">
+            <ion-row>
+              <ion-col size-sm="8" size-xs="12">
+                <div class="ion-margin-top">
+                  <ion-label>
+                    Cours corequis:
+                  </ion-label>
+                </div>
+              </ion-col>
+
+              <ion-col size-sm="2" offset-sm="1" size-xs="12">
+                <ion-button id="ajouterCorequis" (click)="appelerModalPlanCadreCorequis()">Choisir</ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ng-container formArrayName="coursLiesCorequis">
+                  <!-- Référence : https://ramya-bala221190.medium.com/a-simple-example-how-to-implement-nested-formgroups-and-formarrays-in-angular-6f78d7d4b6a3 -->
+                  <ng-container *ngFor="let p of corequisFormArray.controls; let i = index" class="cards">
+
+                    <ion-row  [formGroupName]="i" class="rangeeCritere">
+                      <ion-col>
+                        <ion-input
+                          class="ion-hide"
+                          type="number"
+                          formControlName="id"
+                          readonly="true">
+                        </ion-input>
+
+                        <ion-textarea
+                          type="text"
+                          formControlName="enonce"
+                          readonly="true"
+                          auto-grow="true">
+                        </ion-textarea>
+                      </ion-col>
+
+                    </ion-row>
+                  </ng-container>
+
+                </ng-container>
+              </ion-col>
+
+            </ion-row>
+
+          </section>
+
+          <!--@author lebel -->
+          <section class="sectionGenerale">
+            <ion-row>
+              <ion-col size-sm="8" size-xs="12">
+                <div class="ion-margin-top">
+                  <ion-label>
+                    Compétences:
+                  </ion-label>
+                </div>
+              </ion-col>
+
+              <ion-col size-sm="2" offset-sm="1" size-xs="12">
+                <ion-button id="ajouterCompetences" (click)="appelerModalCompetence()">Choisir</ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ng-container formArrayName="competences">
+                  <!-- Référence : https://ramya-bala221190.medium.com/a-simple-example-how-to-implement-nested-formgroups-and-formarrays-in-angular-6f78d7d4b6a3 -->
+                  <ng-container *ngFor="let p of competenceFormArray.controls; let i = index" class="cards sectionMarginBottom" [formGroupName]="i">
+                    <section class="competence">
+                      <ion-row class="rangeeCritere">
+                        <ion-col>
+                          <ion-input
+                            class="ion-hide"
+                            type="number"
+                            formControlName="id"
+                            readonly="true"
+                            hidden="hidden"
+                          ></ion-input>
+
+                          <ion-label>Code: </ion-label>
+                          <ion-input
+                            type="text"
+                            formControlName="code"
+                            readonly="true"
+                          ></ion-input>
+                        </ion-col>
+
+                        <ion-col>
+                          <ion-label>Énoncé: </ion-label>
+                          <ion-textarea
+                            type="text"
+                            formControlName="enonce"
+                            readonly="true"
+                            auto-grow="true">
+                          </ion-textarea>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-label class="ion-margin-top">Atteinte: </ion-label>
+                          <ion-radio-group
+                            formControlName="atteinte"
+                            class="typePrealable"
+                            (ionChange)="desactiverProgression($event, i)">
+                            <ion-item>
+                              <ion-radio value="Complète">Complète</ion-radio>
+                            </ion-item>
+                            <ion-item>
+                              <ion-radio value="Partielle">Partielle</ion-radio>
+                            </ion-item>
+                          </ion-radio-group>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row class="progression{{i}}">
+                        <ion-label>Progression</ion-label>
+                        <ion-input
+                          class="progression"
+                          type="text"
+                          [clearInput]="true"
+                          placeholder="Entrez la progression sous ce format: 1/3, 2/3"
+                          formControlName="progression"
+                          errorText="La progression est requise"
+                        ></ion-input>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-label>Contexte local: </ion-label>
+                        <ion-textarea
+                          type="text"
+                          placeholder="Entrez la contexte de réalisation local"
+                          formControlName="contexteLocal"
+                          auto-grow="true">
+                        </ion-textarea>
+                      </ion-row>
+
+                      <section formArrayName="elementsCompetences" *ngIf="p.get('elementsCompetences')">
+                        <h5 class="ion-text-center">Éléments de compétences</h5>
+                        <ng-container *ngFor="let element of getElementsCompetencesArray(i).controls; let j = index" class="cards" [formGroupName]="j">
+
+                          <section class="rangeeCritere">
+                            <ion-row>
+                              <ion-col>
+                                <ion-input
+                                  class="ion-hide"
+                                  type="number"
+                                  formControlName="id"
+                                  readonly="true">
+                                </ion-input>
+
+                                <ion-label>Numéro: </ion-label>
+                                <ion-input
+                                  type="text"
+                                  formControlName="numero"
+                                  readonly="true"
+                                ></ion-input>
+                              </ion-col>
+
+                              <ion-col>
+                                <ion-label>Texte: </ion-label>
+                                <ion-textarea
+                                  type="text"
+                                  formControlName="texte"
+                                  readonly="true"
+                                  auto-grow="true"
+                                ></ion-textarea>
+                              </ion-col>
+                            </ion-row>
+
+                            <ion-row>
+                              <ion-col>
+                                <ion-label>Contenu local: </ion-label>
+                                <ion-textarea
+                                  type="text"
+                                  placeholder="Entrez la contenu local"
+                                  formControlName="contenuLocal"
+                                  auto-grow="true">
+                                </ion-textarea>
+                              </ion-col>
+                            </ion-row>
+                          </section>
+                        </ng-container>
+                      </section>
+                    </section>
+
+
+
+                  </ng-container>
+                </ng-container>
+              </ion-col>
+            </ion-row>
+          </section>
+          <!--End @author lebel -->
+
+          <section class="sectionGenerale">
+            <ion-select
+              fill="outline"
+              formControlName="entreVigueur"
+              [compareWith]="comparerSession"
+              okText="Choisir"
+              cancelText="Annuler">
+              <div slot="label">Entrée en vigueur<ion-text color="danger">*</ion-text></div>
+              <ion-select-option *ngFor="let s of sessions" [value]="s">
+                {{s?.session}} ({{s?.annee}})
+              </ion-select-option>
+            </ion-select>
+            <ng-container *ngIf="champSession?.invalid && (champSession?.dirty || champSession?.touched)">
+              <p class="erreur" *ngIf="champSession?.errors?.['required']">Champ requis</p>
+            </ng-container>
+          </section>
+
+
+          <section class="sectionGenerale">
+            <ion-row>
+              <ion-col size-sm="8" size-xs="12">
+                <div class="ion-margin-top">
+                  <ion-label>
+                    Critères d'évaluation:
+                  </ion-label>
+                </div>
+              </ion-col>
+
+              <ion-col size-sm="2" offset-sm="1" size-xs="12">
+                <ion-button id="ajouterCritere" (click)="appelerModalCriteresEvaluations()">Ajouter</ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ng-container formArrayName="criteresEvaluations">
+              <ng-container *ngFor="let c of criteresEvaluationsFormArray.controls; let i = index;">
+                <ion-row formGroupName="{{i}}" class="rangeeCritere">
+
+                  <ion-col size="7">
+                    <ion-input
+                      id="idCritere{{i}}"
+                      formControlName="id"
+                      class="ion-hide">
+                    </ion-input>
+                    <ion-textarea formControlName="enonce" *ngIf="!c.get('elementsCompetence')" readonly="true" auto-grow="true" value="{{c.get('enonce')}}"/>
+                    <ion-textarea formControlName="enonce" *ngIf="c.get('elementsCompetence')" readonly="true" auto-grow="true" value="{{c.get('enonce')}} ({{c.get('elementsCompetence')}})"/>
+                    <ion-input formControlName="ponderation">
+                    </ion-input>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-button color="light" (click)="appelerModalCriteresEvaluations(c.get('id')?.value, i)">Modifier</ion-button>
+                  </ion-col>
+                  <ion-col size="2">
+                    <ion-button (click)="supprimerCritere(criteresEvaluation[i], i)" color="danger"><ion-icon name="trash"></ion-icon> </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ng-container>
+            </ng-container>
+          </section>
+
+
+
+            <section *ngFor="let section of lsSection; let i = index">
+              <app-section-formulaire
+                *ngIf="section.type_section_id === 1"
+                [formGroup]="planCadreForm"
+                [index]="i"
+                formArrayName="sections"
+                [section]="section"
+                [planCadre] = true>
+              </app-section-formulaire>
+            </section>
+
+
+
+
+
+
+            <ion-row>
+              <ion-col size="3" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3, 4, 5])">
+                <ion-button *ngIf="!isEditing" [disabled]="!planCadreForm.valid" type="submit" (click)="createPlanCadre()">Créer</ion-button>
+                <ion-button *ngIf="isEditing" [disabled]="!planCadreForm.valid" type="submit" (click)="editPlanCadre()">Modifier</ion-button>
+                <input type="submit" class="ion-page-invisible" [disabled]="!planCadreForm.valid"/>
+              </ion-col>
+
+              <ion-col size="2">
+                <ion-button *ngIf="!isEditing" href="/programmes/{{programmeId}}/plans-cadres" color="danger">Annuler</ion-button>
+                <ion-button *ngIf="isEditing" href="/programmes/{{programmeId}}/plans-cadres/{{planCadreId}}" color="danger">Annuler</ion-button>
+              </ion-col>
+
+            </ion-row>
+        </form>
+      </section>
+    </ion-grid>
+  </main>
+
+</ion-content>
+<app-footer></app-footer>

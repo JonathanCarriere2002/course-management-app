@@ -1,0 +1,47 @@
+<!--
+  Page contenant les détails d'un utilisateur
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/utilisateurs">Utilisateurs</ion-breadcrumb>
+      <ion-breadcrumb>{{utilisateur.nom}}, {{utilisateur.prenom}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">Utilisateur #{{utilisateur.id}}</h1>
+    <p class="ion-text-center">Courriel: {{utilisateur.courriel}}</p>
+    <p class="ion-text-center">Nom: {{utilisateur.nom}}, {{utilisateur.prenom}}</p>
+    <p class="ion-text-center">Rôle: {{utilisateur.roleObjet?.nom}}</p>
+    <ion-grid>
+      <ion-row class="sectionMarginBottom">
+        <ion-col class="ion-text-start">
+          <ion-button class="btn btnFixe ion-text-wrap" href='/utilisateurs/modifier/{{utilisateur.id}}'>Modifier</ion-button>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-button class="btn btnFixe ion-text-wrap" color="danger" (click)="confirmSuppression(utilisateur)">Supprimer</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h2 class="ion-text-center">Programmes</h2>
+          <p *ngIf="!chargement && utilisateur.programmes?.length === 0" class="messageErreur">Cet utilisateur ne possède pas de programmes</p>
+        </ion-col>
+      </ion-row>
+      <ul class="cards">
+        <li *ngFor="let programme of utilisateur.programmes">
+          <ion-card class="carteListe">
+            <ion-card-header>
+              <ion-card-title>({{programme.code}}) {{programme.titre}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-float-sm-end">
+              <ion-button class="btn btnFixe ion-text-wrap" href='/details-programmes/{{programme.id}}'>Détails</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </li>
+      </ul>
+    </ion-grid>
+  </section>
+</ion-content>

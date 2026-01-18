@@ -1,0 +1,71 @@
+<!--
+  Formulaire permettant d'ajouter ou modifier des sections
+  @author Emeric Chauret
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/liste-sections">Sections</ion-breadcrumb>
+      <ion-breadcrumb *ngIf="formModif" href='/details-section/{{section?.id}}'>{{section?.titre}}</ion-breadcrumb>
+      <ion-breadcrumb>{{formModif ? "Modifier" : "Créer"}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">{{formModif ? "Modifier" : "Créer"}} une section</h1>
+    <form (ngSubmit)="formModif ? modifierSection() : creerSection()" [formGroup]="sectionForm">
+      <section class="sectionGenerale">
+        <ion-input
+          type="text"
+          labelPlacement="floating"
+          [clearInput]="true"
+          placeholder="Titre"
+          formControlName="titre"
+          errorText="Champ requis">
+          <div slot="label">Titre<ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </section>
+      <section class="sectionMarginBottom">
+        <ion-select
+          fill="outline"
+          labelPlacement="floating"
+          okText="Confirmer"
+          cancelText="Annuler"
+          formControlName="type_section_id">
+          <div slot="label">Type<ion-text color="danger">*</ion-text></div>
+          <ion-select-option
+            *ngFor="let typeSection of typesSection"
+            [value]="typeSection.id">
+            {{typeSection.type}}
+          </ion-select-option>
+        </ion-select>
+        <ng-container *ngIf="sectionForm.get('type_section_id')?.invalid && (sectionForm.get('type_section_id')?.dirty || sectionForm.get('type_section_id')?.touched)">
+          <p class="messageErreur" *ngIf="sectionForm.get('type_section_id')?.errors?.['required']">Champ requis</p>
+        </ng-container>
+      </section>
+      <section class="sectionGenerale">
+        <ion-checkbox
+          labelPlacement="end"
+          formControlName="obligatoire">
+          <ion-label>Obligatoire</ion-label>
+        </ion-checkbox>
+      </section>
+      <section class="sectionGenerale">
+        <ion-label>Aide</ion-label>
+        <quill-editor
+          formControlName="aide"
+          placeholder="">
+        </quill-editor>
+      </section>
+      <section class="ion-text-center">
+        <div>
+          <ion-button class="btn btnFixe ion-text-wrap" type="submit" [disabled]="!sectionForm.valid">{{formModif ? "Modifier" : "Créer"}}
+          </ion-button>
+        </div>
+        <div>
+          <ion-button class="btn btnFixe ion-text-wrap" color="danger" (click)="ouvrirModalConfirmerAnnulation()">Annuler</ion-button>
+        </div>
+      </section>
+    </form>
+  </section>
+</ion-content>

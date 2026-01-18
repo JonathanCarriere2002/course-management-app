@@ -1,0 +1,40 @@
+<!--
+  Page permettant d'afficher la liste des sessions
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb>Sessions</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">Sessions</h1>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="6" class="ion-no-padding">
+          <ion-searchbar class="ion-no-padding" color="dark" placeholder="Rechercher une session" (ionInput)="rechercher($event)"></ion-searchbar>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="6" class="ion-no-padding">
+          <ion-button class="btn ion-text-wrap ion-float-sm-end" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])" href='/session/ajouter'>Créer une session</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="rowDeuxCartes">
+        <ng-container *ngFor="let session of sessionsRecherche">
+          <ion-col size-xs="12" size-sm="6" class="ion-no-padding">
+            <ion-card class="carteListe carteListeDouble">
+              <ion-card-header>
+                <ion-card-title>{{session.session}} {{session.annee}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content class="ion-float-sm-end">
+                <ion-button class="btn btnFixe ion-text-wrap" [routerLink]="['/session/details', session.id]">Détails</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+    <p class="messageErreur" *ngIf="!chargement && sessionsRecherche.length === 0">Aucune session ne correspond à votre requête</p>
+  </section>
+</ion-content>

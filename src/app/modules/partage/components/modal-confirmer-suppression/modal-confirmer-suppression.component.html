@@ -1,0 +1,27 @@
+<!--
+  Modal permettant de confirmer la suppression
+  @author Jonathan Carrière
+-->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Confirmation</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="centrerModal">
+  <ion-row class="centrerContenu">
+    <ion-col size="10">
+      <ion-text>{{ message }}</ion-text>
+    </ion-col>
+  </ion-row>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" color="danger">Annuler</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirmer</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

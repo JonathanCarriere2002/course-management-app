@@ -1,0 +1,22 @@
+.programme-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.programme-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+ion-list{
+  background-color: transparent;
+}
+
+.colonneAjouter {
+  text-align: right;
+  padding-right: 1em;
+}
+
+.colonneRechercher {
+  padding-left: 3em;
+}

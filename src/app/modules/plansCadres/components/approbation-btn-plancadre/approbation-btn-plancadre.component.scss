@@ -1,0 +1,32 @@
+/**
+  Style pour le component permettant d'effectuer l'approbation d'un plan-cadre sur la page de liste
+  @author Jonathan Carrière
+*/
+
+/**
+Conserver l'opacité du bouton lorsqu'il est désactivé
+ */
+.btnApprobationSuccess {
+  opacity: 1;
+}
+
+/**
+Requête média pour la largeur des boutons d'approbation
+ */
+@media (min-width: 992px) {
+  .btnApprobationWarning, .btnApprobationSuccess {
+    width: 250px;
+  }
+}
+
+/**
+Requête média permettant d'adapter les boutons d'approbation pour les écrans de petites tailles
+ */
+@media (max-width: 991px) {
+  .btnApprobationWarning, .btnApprobationSuccess {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+  }
+}

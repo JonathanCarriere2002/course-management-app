@@ -1,0 +1,14 @@
+<!--
+  Component permettant d'effectuer la modification et suppression de l'approbation d'un plan de cours
+  @author Jonathan Carrière
+-->
+<ion-row class="rangeeInfo" *ngIf="planCours?.approbation">
+  <ion-col size-xs="12" size-sm="4" size-md="7">
+    <ion-text>Date d'approbation du plan de cours :</ion-text>
+  </ion-col>
+  <ion-col>
+    <ion-text>{{planCours.approbation | date:'yyyy-MM-dd'}}</ion-text>
+    <ion-button *ngIf="authService.verifierRoleUtilisateurConnecte([1, 4])" color="light" class="ion-float-end" (click)="suppressionApprobation()"><ion-icon name="trash"></ion-icon></ion-button>
+    <ion-button *ngIf="authService.verifierRoleUtilisateurConnecte([1, 4])" color="light" class="ion-float-end" (click)="modificationApprobation()"><ion-icon name="calendar"></ion-icon></ion-button>
+  </ion-col>
+</ion-row>

@@ -1,0 +1,180 @@
+/**
+@author Jacob Beauregard-Tousignant
+ */
+
+$styleBordureSection: black solid 1px;
+
+
+
+
+.titreSection{
+  border-bottom: $styleBordureSection;
+}
+
+
+.objectif{
+  border: $styleBordureSection;
+}
+
+.criterePerformance{
+  margin-bottom: 0.3em;
+}
+
+ion-grid{
+  margin-bottom: 3em;
+}
+
+.attitudes{
+  //border: $styleBordureSection;
+
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+h2{
+  font-weight: bold;
+}
+
+/**
+Pour les sous-titres, donc Code, énoncé de la compétence, etc.
+ */
+.sousTitre{
+  font-weight: bolder;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+  margin-top: 0.5em;
+}
+
+
+.elementCompetence{
+  margin-bottom: 0.6em;
+}
+
+
+/**
+Écran au dessus de XS
+ */
+@media (min-width: 768px) {
+  .standard{
+    border-top: $styleBordureSection;
+    border-bottom: $styleBordureSection;
+    border-right: $styleBordureSection;
+  }
+
+  .titrePrecisionContenu{
+    border-right: $styleBordureSection;
+    padding-right: 0.1em;
+  }
+
+
+
+  .sectionElementCompetence{
+    border: $styleBordureSection;
+
+  }
+
+}
+/**
+Écran XS
+ */
+@media (max-width: 767px) {
+  .standard{
+    border: $styleBordureSection;
+    margin-top: 0.5em;
+  }
+
+  .titrePrecisionContenu{
+    border-bottom: $styleBordureSection;
+  }
+
+  .contexteLocal{
+    margin-top: 0.5em;
+    border-top: $styleBordureSection;
+  }
+
+  .objStaPrecElementCompetence{
+    display: none;
+  }
+
+
+
+
+  .sectionElementCompetence{
+    margin-top: 0.5em;
+    border: $styleBordureSection;
+  }
+
+  .elementCompetence{
+    border: $styleBordureSection;
+    padding: 0.4em;
+  }
+
+}
+
+/**
+Écran XL
+ */
+@media (min-width: 1200px) {
+  .contexteLocal{
+    border-top: $styleBordureSection;
+    border-bottom: $styleBordureSection;
+    border-right: $styleBordureSection;
+  }
+
+  .titrePrecisionContenu{
+    border-right: none;
+    border-bottom: $styleBordureSection;
+    margin-top: 0;
+  }
+
+  .affichePasXl{
+    display: none;
+  }
+
+}
+
+/**
+Écran sous XL
+ */
+@media (max-width: 1199px) {
+  .contexteLocal{
+    border-bottom: $styleBordureSection;
+    border-left: $styleBordureSection;
+    border-right: $styleBordureSection;
+  }
+
+  .objStaPrecElementCompetence{
+    display: none;
+  }
+
+  .affichePasSousXl{
+    display: none;
+  }
+
+
+}
+
+//@media (min-width: 1200px) and (max-width: 1260px){
+//  .titreSection{
+//    padding-bottom: 1.9em;
+//  }
+//}
+
+
+
+
+
+@media (max-width: 1486px) and (min-width: 1200px){
+  .codeAffichage{
+    padding-top: 1.5em;
+  }
+
+}
+
+
+
+
+
+
+
+

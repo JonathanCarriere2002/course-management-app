@@ -1,0 +1,23 @@
+/**
+ * @author Emeric Chauret et Jonathan Carrière
+ */
+
+.table > ion-row {
+  border-top: 1px solid;
+  border-color: var(--ion-color-step-300, #b3b3b3);
+}
+
+.table > ion-row:last-child {
+  border-bottom: 1px solid;
+  border-color: var(--ion-color-step-300, #b3b3b3);
+}
+
+.table > ion-row > ion-col {
+  border-left: 1px solid;
+  border-color: var(--ion-color-step-300, #b3b3b3);
+}
+
+.table > ion-row > ion-col:last-child {
+  border-right: 1px solid;
+  border-color: var(--ion-color-step-300, #b3b3b3);
+}

@@ -1,0 +1,38 @@
+<ion-label>Enseignant(s)<ion-text color="danger">*</ion-text></ion-label>
+<ion-button (click)="ouvrirModalEnseignants()" class="btnPlus">
+  <ion-icon name="add-circle-outline"></ion-icon>
+</ion-button>
+<ng-container [formGroup]="formGroup">
+  <ng-container [formArrayName]="formArrayName">
+    <ion-grid>
+      <ion-row *ngFor="let e of enseignantsPlanCours; let i = index" [formGroupName]="i" class="sectionGenerale">
+        <ion-col size-xs="12" size-sm="4">
+          <p>{{e.nom}}</p>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="2">
+          <ion-input
+            labelPlacement="floating"
+            formControlName="groupe"
+            type="number"
+            placeholder="000"
+            step="1"
+            errorText="Min : 1">
+            <div slot="label">Groupe<ion-text color="danger">*</ion-text> :</div>
+          </ion-input>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="6" class="inlineFlex">
+          <ion-input
+            labelPlacement="floating"
+            formControlName="dispo"
+            placeholder="11h à 12h"
+            errorText="Max : 30 caractères">
+            <div slot="label">Dispo<ion-text color="danger">*</ion-text> :</div>
+          </ion-input>
+          <div>
+            <ion-button color="danger" (click)="supprimerEnseignantFormGroup(i)"><ion-icon name="trash"></ion-icon></ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ng-container>

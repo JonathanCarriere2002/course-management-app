@@ -1,0 +1,46 @@
+<!--
+  Page contenant le formulaire de création ou modification pour une session
+  @author Jonathan Carrière
+-->
+<ion-content [fullscreen]="true">
+  <app-chargement [etatChargement]="chargement"></app-chargement>
+  <app-menu></app-menu>
+  <section class="principale">
+    <ion-breadcrumbs [maxItems]="maxBreadCrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb href="/sessions">Sessions</ion-breadcrumb>
+      <ion-breadcrumb>{{formModification ? "Modifier" : "Créer"}} une session</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <h1 class="ion-text-center">{{formModification ? "Modifier" : "Créer"}} une session</h1>
+    <section id="sectionFormulaireSession">
+      <form id="formulaireSession" (ngSubmit)="formModification ? updateSession() : createSession()" [formGroup]="sessionForm">
+        <ion-row>
+          <ion-col size="12">
+            <ion-label>Année<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="number" [clearInput]="true" placeholder="2023" formControlName="annee" errorText="L'année de la session est invalide"></ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Session<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-select interface="popover" placeholder="Veuillez sélectionner une session" formControlName="session">
+              <ion-select-option value="Automne">Automne</ion-select-option>
+              <ion-select-option value="Hiver">Hiver</ion-select-option>
+              <ion-select-option value="Été">Été</ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label>Date limite d'abandon<sup class="champsRequis">*</sup> :</ion-label>
+            <ion-input type="date" [clearInput]="true" formControlName="limite_abandon" errorText="La date limite d'abandon de la session est invalide"></ion-input>
+          </ion-col>
+        </ion-row>
+        <section class="ion-text-center">
+          <section>
+            <ion-button class="btn btnFixe ion-text-wrap" [disabled]="!sessionForm.valid" type="submit">{{formModification ? "Modifier" : "Créer"}}</ion-button>
+          </section>
+          <section>
+            <ion-button class="btn btnFixe ion-text-wrap" color="danger" (click)="ouvrirModalConfirmerAnnulation()">Annuler</ion-button>
+          </section>
+        </section>
+      </form>
+    </section>
+  </section>
+</ion-content>

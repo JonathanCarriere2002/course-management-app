@@ -1,0 +1,41 @@
+<!--
+  Component permettant d'afficher le calendrier des activités
+  @author Emeric Chauret
+  @author Jonathan Carrière
+-->
+<h2>{{titre}}</h2>
+<section class="table" *ngIf="semainesCours && semainesCours.length > 0">
+  <ion-row>
+    <ion-col size="2">
+      <ion-text>Semaine(s)</ion-text>
+    </ion-col>
+    <ion-col size="2">
+      <ion-text>Élément(s) de compétence</ion-text>
+    </ion-col>
+    <ion-col size="5">
+      <ion-text>Balises de contenu</ion-text>
+    </ion-col>
+    <ion-col size="3">
+      <ion-text>Activités et évaluations</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let semaineCours of semainesCours">
+    <ion-col size="2">
+      <ion-text *ngIf="semaineCours.semaineDebut === semaineCours.semaineFin">{{semaineCours.semaineDebut}}</ion-text>
+      <ion-text *ngIf="semaineCours.semaineDebut !== semaineCours.semaineFin">{{semaineCours.semaineDebut}} à {{semaineCours.semaineFin}}</ion-text>
+    </ion-col>
+    <ion-col size="2">
+      <ng-container *ngFor="let elementComp of semaineCours.elementsCompetences; let i = index">
+        <ion-text>{{elementComp.numero}}<ion-text *ngIf="semaineCours.elementsCompetences?.length !== i + 1">,</ion-text></ion-text>
+      </ng-container>
+      <ion-text *ngIf="semaineCours.elementsCompetences?.length === 0">Aucun</ion-text>
+    </ion-col>
+    <ion-col size="5">
+      <quill-view [content]="semaineCours.contenu"></quill-view>
+    </ion-col>
+    <ion-col size="3">
+      <quill-view [content]="semaineCours.activites"></quill-view>
+    </ion-col>
+  </ion-row>
+</section>
+<p class="ion-no-margin" *ngIf="!semainesCours || semainesCours.length === 0">Aucune information.</p>

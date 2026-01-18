@@ -1,0 +1,35 @@
+<!--@author Jacob Beauregard-Tousignant-->
+
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>{{ titre }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+
+    <ion-searchbar color="dark" (ionInput)="searchbarInput($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" class="ion-padding">
+  <ion-list id="modal-list" [inset]="true">
+    <ion-radio-group name="elementSelectionne" [value]="valeurActuelle" [(ngModel)]="valeurActuelle" class="ion-text-wrap">
+      <ion-item *ngFor="let item of objetsFiltres; trackBy: trackItems">
+        <ion-radio [value]="item.value" (ionFocus)="radioSelectionne(item)" class="ion-text-wrap">{{ item.text }}</ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancelChanges()">Annuler</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="confirmChanges()" [disabled]="!valeurActuelle">Confirmer</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

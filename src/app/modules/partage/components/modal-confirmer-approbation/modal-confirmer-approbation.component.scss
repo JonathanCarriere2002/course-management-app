@@ -1,0 +1,47 @@
+/**
+Feuille de style associée au modal pour l'approbation
+@author Jonathan Carrière
+ */
+
+/*
+Centrer le contenu du modal
+*/
+.centrerModal {
+  font-size: 20px;
+  position:absolute;
+  text-align: center;
+  top:40%;
+}
+
+/**
+Changer l'apparence du message d'erreur
+ */
+.messageErreur {
+  color: #eb445a;
+  font-size: 12px;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+/**
+Changer l'apparence du input pour la date
+ */
+.inputDate {
+  border-bottom: 1px solid;
+  padding: 5px;
+}
+
+/**
+Centre l'input pour la date d'approbation
+ */
+.centrerInput {
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+
+/**
+Ajouter de l'espacement entre le sélecteur de date et le message
+ */
+.colonneDate {
+  margin-top: 2em;
+}

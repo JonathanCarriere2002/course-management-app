@@ -1,0 +1,66 @@
+/**
+Requête média permettant d'adapter l'approbation des plans cadre pour les écrans de petites tailles
+@author Jonathan Carrière
+ */
+@media (max-width: 991px) {
+  .btnListe, .btnModifier, .btnSupprimer, .btnUnique {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+  }
+  .colonneApprobation {
+    text-align: center;
+  }
+}
+
+.btnUnique{
+  width: 100%;
+}
+
+
+/**
+Message d'erreur pour le filtrage des plans-cadre
+@author Jonathan Carrière
+ */
+.messageErreur {
+  color: #eb445a;
+  font-size: 30px;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  text-align: center;
+  margin-top: 1em;
+}
+@media (max-width: 767px) {
+  .messageErreur {
+    font-size: 18px;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}
+
+/**
+Changer la taille des h1 des plans cadres
+ */
+.titrePlanCadre {
+  font-size: 95%;
+}
+
+/**
+Pour l'accordéon afin d'afficher les compétences
+ */
+.cartePlanCadre:hover {
+  background-color: #8c8c8c;
+}
+
+.planCadreEtendu {
+  margin-bottom: 2.5%;
+  padding-bottom: 2.5%;
+  border-bottom: black solid 2px;
+}
+
+
+
+.labelColle{
+  margin-top: -1.5em;
+  padding-left: 1em;
+}

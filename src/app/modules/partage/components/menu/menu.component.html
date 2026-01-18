@@ -1,0 +1,43 @@
+<!--
+  Barre de navigation de l'application
+  @author Jonathan Carrière  et Samir El Haddaji
+-->
+<ion-header>
+  <ion-toolbar class="navbar">
+
+
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+      <a href="/accueil" class="ion-title-navbar">
+        <ion-img class="logo_application" src="assets/images/pcpc_navigation.png" alt="Logo de l'application"></ion-img>
+      </a>
+
+      <ion-button *ngIf="!isAccueilPage && !isOublieMotDePassePage" routerLink='/accueil' routerDirection="root" routerLinkActive="selected" style="text-decoration:none">
+        <ion-label class="label-menu">Accueil</ion-label>
+      </ion-button>
+
+      <!--Boutton Programme avec appel a la fonction qui ouvre le popover-->
+      <ion-button *ngIf="!isAccueilPage && !isOublieMotDePassePage" class="label-menu" href='/programmes' routerDirection="root" routerLinkActive="selected" style="text-decoration:none">
+        <ion-label>Programmes</ion-label>
+      </ion-button>
+
+      <ion-button *ngIf="!isAccueilPage && !isOublieMotDePassePage" class="label-menu" (mouseenter)="openPopover($event)" style=" position:relative; right: 25px; ">
+        <ion-icon [name]="isListOpen ? 'chevron-up' : 'chevron-down'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <div class="label-menu">
+        <ion-icon *ngIf="!darkMode" name="sunny-outline"></ion-icon>
+        <ion-icon *ngIf="darkMode" name="moon-outline"></ion-icon>
+        <ion-toggle slot="end" [checked]="darkMode" (ionChange)="toggleDarkMode()" class="toggleDarkMode"></ion-toggle>
+      </div>
+      <ion-button (click)="logout()" href='/connexion' >
+        <ion-label>Déconnexion</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+

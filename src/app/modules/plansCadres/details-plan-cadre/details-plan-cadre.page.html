@@ -1,0 +1,185 @@
+<!--
+  Page permettant d'afficher les détails d'un plan-cadre
+  @author Jacob Beauregard-Tousignant
+-->
+
+
+
+
+<ion-content [fullscreen]="true">
+  <app-menu></app-menu>
+  <section class="principale">
+      <ion-breadcrumbs (ionCollapsedClick)="expandBreadcrumbs()">
+        <ion-breadcrumb href="/accueil">Accueil</ion-breadcrumb>
+        <ion-breadcrumb href="/programmes">Programmes</ion-breadcrumb>
+        <ion-breadcrumb href="/details-programmes/{{planCadre?.programme?.id}}" >{{planCadre?.programme?.code}}</ion-breadcrumb>
+        <ion-breadcrumb href="/programmes/{{programmeId}}/plans-cadres">Plans-cadres</ion-breadcrumb>
+        <ion-breadcrumb>Détail</ion-breadcrumb>
+      </ion-breadcrumbs>
+
+        <h1 class="ion-text-center">{{assemblerTitrePlanCadre(planCadre!)}}
+          <ion-text color="warning" *ngIf="!planCadre?.complet">
+            <ion-icon name="time-outline"></ion-icon>
+          </ion-text><ion-text color="success" *ngIf="planCadre?.complet">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </ion-text>
+        </h1>
+
+          <ion-grid>
+            <ion-row class="ion-justify-content-end">
+              <ion-col size-xs="12" size-sm="3">
+                <ion-button class="btnUnique ion-text-wrap ion-float-sm-end" color="light" href='/programmes/{{programmeId}}/plans-cadres/{{planCadre?.id}}/modifier'>Modifier</ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text>Entrée en vigueur pour la session {{planCadre?.entreVigueur?.session}} {{planCadre?.entreVigueur?.annee}}</ion-text>
+              </ion-col>
+            </ion-row>
+
+
+          <section class="sectionGenerale">
+            <h2>Information du cours</h2>
+            <ion-row class="rangeeInfo">
+              <ion-col size-xs="12" size-sm="4" size-md="7">
+                <ion-text>Programme:</ion-text>
+              </ion-col>
+              <ion-col>
+                <ion-text>{{planCadre?.programme?.titre}} ({{planCadre?.programme?.code}})</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row class="rangeeInfo">
+              <ion-col size-xs="12" size-sm="4" size-md="7">
+                <ion-text>Titre du cours: </ion-text>
+              </ion-col>
+              <ion-col>
+                <ion-text id="titrePlanCadre">{{planCadre?.titre}}</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row class="rangeeInfo">
+              <ion-col size-xs="12" size-sm="4" size-md="7">
+                <ion-text>Code du cours: </ion-text>
+              </ion-col>
+              <ion-col>
+                <ion-text>{{planCadre?.code}}</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row class="rangeeInfo">
+              <ion-col size-xs="12" size-sm="4" size-md="7">
+                <ion-text>Pondération: </ion-text>
+              </ion-col>
+              <ion-col>
+                <ion-text>{{planCadre?.ponderation}}</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row class="rangeeInfo">
+              <ion-col size-xs="12" size-sm="4" size-md="7">
+                <ion-text>Unités: </ion-text>
+              </ion-col>
+              <ion-col>
+                <ion-text *ngIf="planCadre?.unites">{{planCadre?.unites}}</ion-text>
+                <ion-text *ngIf="!planCadre?.unites">Aucune information</ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row class="rangeeInfo">
+              <ion-col size-xs="12" size-sm="4" size-md="7">
+                <ion-text>Pondération de l'évaluation certificative finale: </ion-text>
+              </ion-col>
+              <ion-col>
+                <ion-text *ngIf="planCadre?.ponderationFinale">{{planCadre?.ponderationFinale}}%</ion-text>
+                <ion-text *ngIf="!planCadre?.ponderationFinale">Aucune information</ion-text>
+              </ion-col>
+            </ion-row>
+          </section>
+
+          <app-approbation-details-plancadre [planCadre]="planCadre!" [planCadreTitre]="assemblerTitrePlanCadre(planCadre!)" [valeurProgressBar]="valeurProgressBar" (planCadreApprobation)="getPlanCadre(planCadre?.id!)"></app-approbation-details-plancadre>
+
+<!--          <section class="sectionGenerale" *ngIf="planCadre?.competences && planCadre?.competences!.length > 0">-->
+<!--            <h2>{{(planCadre !== undefined && planCadre.competences.length > 1) ? "Compétences": "Compétence"}}</h2>-->
+<!--              <app-tableau-competence [planCadre]="planCadre"></app-tableau-competence>-->
+<!--          </section>-->
+
+          <section class="sectionGenerale" *ngIf="planCadre?.criteresEvaluations && planCadre?.criteresEvaluations!.length > 0">
+            <h2>{{(planCadre !== undefined && planCadre.criteresEvaluations.length > 1) ? "Critères d'évaluation": "Critère d'évaluation"}}</h2>
+            <section class="rangeeInfo" *ngFor="let critere of planCadre?.criteresEvaluations">
+              <ion-row>
+                <ion-col size-xs="8" size-sm="9"  size-lg="9">
+                  <ion-text>{{critere.enonce}}
+                    <!--                ({{critere.elementCompetence.numero}})-->
+                  </ion-text>
+                </ion-col>
+                <ion-col offset-xs="1" size-xs="3" offset-sm="1" size-sm="2" >
+                  {{critere.ponderation}} %
+                </ion-col>
+              </ion-row>
+            </section>
+          </section>
+
+
+          <section class="sectionGenerale" *ngIf="planCadre?.coursLiesPrealablesAbsolus && planCadre?.coursLiesPrealablesAbsolus!.length > 0">
+<!--            <h2>{{(planCadre?.coursLiesPrealablesAbsolus?.length > 1) ? "Cours préalables absolus": "Cours préalable absolu"}}</h2>-->
+            <h2>Préalables absolus</h2>
+            <app-list-plans-cadres-lies-component [listPlansCadres]="planCadre?.coursLiesPrealablesAbsolus!" [planCadre]="planCadre"></app-list-plans-cadres-lies-component>
+          </section>
+
+
+          <section class="sectionGenerale" *ngIf="planCadre?.coursLiesPrealablesRelatifs && planCadre?.coursLiesPrealablesRelatifs!.length > 0">
+<!--            <h2>{{planCadre?.coursLiesPrealablesRelatifs.length > 1 ? "Cours préalables relatifs": "Cours préalable relatif"}}</h2>-->
+            <h2>Préalables relatifs</h2>
+            <app-list-plans-cadres-lies-component [listPlansCadres]="planCadre?.coursLiesPrealablesRelatifs" [planCadre]="planCadre"></app-list-plans-cadres-lies-component>
+
+          </section>
+
+
+          <section class="sectionGenerale" *ngIf="planCadre?.coursLiesCorequis && planCadre?.coursLiesCorequis!.length > 0">
+            <h2>Cours corequis</h2>
+            <app-list-plans-cadres-lies-component [listPlansCadres]="planCadre?.coursLiesCorequis!" [planCadre]="planCadre"></app-list-plans-cadres-lies-component>
+          </section>
+
+          <section class="sectionGenerale" *ngIf="planCadre?.coursLiesSuivants && planCadre?.coursLiesSuivants!.length > 0">
+            <h2>Cours préalable à</h2>
+            <app-list-plans-cadres-lies-component [listPlansCadres]="planCadre?.coursLiesSuivants" [planCadre]="planCadre"></app-list-plans-cadres-lies-component>
+          </section>
+
+
+
+
+
+          <section class="sectionGenerale" *ngFor="let section of planCadre?.sections">
+            <app-section-details
+              *ngIf="section.type_section_id === 1"
+              [section]="section">
+            </app-section-details>
+
+            <ng-container *ngIf="section.type_section_id === 3 && planCadre?.competences && planCadre?.competences!.length > 0">
+              <h2>{{section.titre}}</h2>
+              <app-tableau-competence
+                [planCadre]="planCadre">
+              </app-tableau-competence>
+            </ng-container>
+          </section>
+
+
+            <ion-row class="ion-justify-content-center">
+              <ion-col size-xs="12" size-lg="3" size-md="4">
+                <ion-button class="btnUnique ion-text-wrap ion-float-sm-end" (click)="exporterCSV()" color="light">CSV</ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-center" *ngIf="planCadre">
+              <ion-col size-xs="12" size-lg="3" size-md="4">
+                <app-pdf-plans-cadres [planCadre]="planCadre"></app-pdf-plans-cadres>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-center" *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])">
+              <ion-col size-xs="12" size-lg="3" size-md="4">
+                <ion-button class="btnUnique ion-text-wrap ion-float-sm-end" (click)="confirmerSuppression(planCadre)" color="danger">Supprimer </ion-button>
+              </ion-col>
+            </ion-row>
+
+
+    </ion-grid>
+  </section>
+
+</ion-content>

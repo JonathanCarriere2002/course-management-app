@@ -1,0 +1,8 @@
+<!--
+  Component permettant d'effectuer l'approbation d'un plan-cadre sur la page de liste
+  @author Jonathan Carrière
+-->
+<ion-button *ngIf="!planCadre?.approbationDepartement && authService.verifierRoleUtilisateurConnecte([1, 4])" class="btnApprobationWarning ion-text-wrap" color="light" (click)="boutonStopPropagation($event); confirmationApprobation('par le département', 'approuver')">Approuver par le département<ion-icon name="alert-circle-outline"></ion-icon></ion-button>
+<ion-button *ngIf="planCadre?.approbationDepartement && !planCadre?.approbationComite && authService.verifierRoleUtilisateurConnecte([1, 4])" class="btnApprobationWarning ion-text-wrap" color="light" (click)="boutonStopPropagation($event); confirmationApprobation('par le comité de programme', 'approuver')">Approuver par le comité de programme<ion-icon name="alert-circle-outline"></ion-icon></ion-button>
+<ion-button *ngIf="planCadre?.approbationDepartement && planCadre?.approbationComite && !planCadre?.depotDirectionEtudes && authService.verifierRoleUtilisateurConnecte([1, 2, 3])" class="btnApprobationWarning ion-text-wrap" color="light" (click)="boutonStopPropagation($event); confirmationApprobation('à la direction des études', 'déposer')">Déposer à la direction des études<ion-icon name="alert-circle-outline"></ion-icon></ion-button>
+<ion-button *ngIf="planCadre?.approbationDepartement && planCadre?.approbationComite && planCadre?.depotDirectionEtudes && planCadre?.depotDirectionEtudes" class="btnApprobationSuccess ion-text-wrap" color="light" disabled="true">Approuvé<ion-icon name="checkmark-circle-outline"></ion-icon></ion-button>

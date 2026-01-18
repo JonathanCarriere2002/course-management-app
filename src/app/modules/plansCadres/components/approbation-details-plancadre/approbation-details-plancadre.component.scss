@@ -1,0 +1,91 @@
+/**
+  Style pour le component permettant d'effectuer l'approbation d'un plan-cadre sur la page de détails
+  @author Jonathan Carrière
+*/
+
+/**
+Rendre du texte italic
+ */
+.texteItalic {
+  font-style: italic;
+}
+
+/**
+Conserver l'opacité du bouton lorsqu'il est désactivé
+ */
+.btnApprobationSuccess {
+  opacity: 1;
+}
+
+/**
+Requête média pour la hauteur de la barre de progrès
+ */
+@media (min-width: 768px) {
+  .barreProgres {
+    height: 36px;
+  }
+}
+
+/**
+Requête média permettant d'adapter l'approbation des plans cadre pour les écrans de petites tailles
+ */
+@media (max-width: 767px) {
+  .barreProgres {
+    height: 18px;
+  }
+  .btnApprobationWarning, .btnApprobationSuccess {
+    width:100%;
+    display: flex;
+    justify-content: center;
+  }
+  .colonneApprobation {
+    text-align: center;
+  }
+}
+
+/**
+Requêtes média permettant d'adapter le texte pour les boutons d'approbation pour les écrans de petites tailles
+ */
+@media (max-width: 459px) and (min-width: 395px) {
+  .btnApprobationWarning {
+    font-size: 12px;
+  }
+}
+@media (max-width: 394px) and (min-width: 200px) {
+  .btnApprobationWarning {
+    font-size: 10px;
+  }
+}
+
+/**
+Style pour le barre de progrès pour l'approbation
+ */
+.barreProgres {
+  margin: 4px 2px;
+  border-radius: 25px;
+}
+
+/**
+Style permettant de centrer la barre de progrès
+ */
+.colonneProgres {
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+
+/**
+Mise en forme des informations
+@author Jacob Beauregard-Tousignant
+ */
+.sectionGenerale{
+  margin-bottom: 2%;
+  padding: 2%;
+  border-bottom: black ;
+  border-style: solid;
+}
+
+.rangeeInfo{
+  border-bottom: 1px solid;
+  margin-bottom: 2.5%;
+}

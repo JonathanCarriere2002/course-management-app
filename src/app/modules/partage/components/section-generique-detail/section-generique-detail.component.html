@@ -1,0 +1,16 @@
+
+<ion-row>
+  <ion-col>
+    <h2>{{section.titre}}</h2>
+  </ion-col>
+  <ion-col class="ion-padding-top" *ngIf="section.infosSupplementaires">
+    <p>{{section.infosSupplementaires}}</p>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col class="afficherRichText">
+    <quill-view [content]="section.contenu"></quill-view>
+  </ion-col>
+</ion-row>
+
+

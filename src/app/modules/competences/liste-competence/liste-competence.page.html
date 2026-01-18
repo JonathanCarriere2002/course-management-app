@@ -1,0 +1,61 @@
+<!-- @author lebel-->
+<app-menu></app-menu>
+<ion-content [fullscreen]="true">
+  <main>
+    <app-chargement [etatChargement]="chargement"></app-chargement>
+    <ion-breadcrumbs class="em-bread-crums" [maxItems]="maxBreadcrumbs" (ionCollapsedClick)="expandBreadcrumbs()">
+      <ion-breadcrumb href="accueil">Accueil</ion-breadcrumb>
+      <ion-breadcrumb >Compétences</ion-breadcrumb>
+    </ion-breadcrumbs>
+    <section>
+      <section>
+        <ion-grid>
+          <ion-row>
+            <ion-col offset="0.17">
+              <h1>Compétences</h1>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-margin-start" size-xs="12" size-sm="12" size-lg="8">
+              <ion-row>
+                <ion-col
+                  size="6">
+                  <ion-searchbar show-clear-button="focus" placeholder="Rechercher une competence"
+                  animated="true" class="champsRecherche" (ionInput)="rechercherComp($event)"
+                  ></ion-searchbar>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </section>
+
+      <section class="ion-padding">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="6" size-lg="4" *ngFor="let competence of competenceRecherche">
+              <ion-card>
+                <ion-card-header class="ion-text-center">
+                  <ion-card-title>({{competence.code}}) - {{competence.enonce}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content class="boutonsActionElementListe">
+                  <section>
+                    <ion-row class="ion-text-center ion-align-items-center ion-justify-content-center">
+                      <ion-col size-xl="9" size-lg="9" size-md="12" size-sm="12" size-xs="12">
+                        <ion-button class="btnListe" color="light"
+                                    *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])"
+                                    href='/competence/modifier/{{competence.id}}'>Modifier</ion-button>
+                        <ion-button class="btnListe" (click)="confirmSuppression(competence)" color="danger"
+                                    *ngIf="authService.verifierRoleUtilisateurConnecte([1, 2, 3])"><ion-icon name="trash"></ion-icon> </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </section>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </section>
+    </section>
+  </main>
+</ion-content>

@@ -1,0 +1,187 @@
+<!--@author Jaocb Beauregard-Tousignant-->
+
+
+<section *ngFor="let lienCompetence of planCadre?.competences">
+  <ion-grid class="tableau">
+    <ion-row>
+      <ion-col size-md="6" size-xs="12" size-xl="4" class="objectif">
+        <ion-row class="titreSection">
+          <h2>Objectif</h2>
+        </ion-row>
+        <ion-row>
+          <ion-col size-md="3" size-xs="12">
+            <ion-row class="sousTitre">
+              Code
+            </ion-row>
+            <ion-row class="codeAffichage">
+              {{lienCompetence.competence.code}}
+            </ion-row>
+          </ion-col>
+          <ion-col size-md="9" size-xs="12">
+            <ion-row class="sousTitre">
+              Énoncé de la compétence
+            </ion-row>
+            <ion-row>
+              {{lienCompetence.competence.enonce}}
+            </ion-row>
+
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size-md="6" size-xs="12" size-xl="4" class="standard">
+        <ion-row class="titreSection">
+          <h2>Standard</h2>
+        </ion-row>
+        <ion-row>
+          <ion-col class="sousTitre">
+            Contexte de réalisation
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            {{lienCompetence.competence.contexte}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+
+      <ion-col class="contexteLocal" size-xs="12" size-xl="4">
+        <ion-row>
+          <ion-col size-md="3" size-xs="12" size-xl="12" class="ion-no-padding ion-no-margin">
+            <ion-row class="titrePrecisionContenu">
+              <h2>Précision sur le contenu</h2>
+            </ion-row>
+          </ion-col>
+          <ion-col size-md="9" size-xs="12" size-xl="12">
+            <ion-row class="sousTitre">
+              <ion-col>
+                <ion-col size="12">
+                  Contexte de réalisation local
+                </ion-col>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-col>
+                  {{lienCompetence.contexteLocal}}
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class="attitudes">
+      <ion-col size="12">
+        <ion-row class="alignCenterVertical">
+          <ion-col size="12" class="ion-no-padding ion-no-margin">
+            <ion-row>
+              <p class="">Attitudes à enseigner et à évaluer pour la compétence {{lienCompetence.competence.code}}: {{lienCompetence.planCadre.attitudes}}</p>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row *ngIf="lienCompetence.competence.elementsCompetences.length>0" class="sectionElementCompetence">
+      <ion-col size="12">
+        <h1>Éléments de la compétence {{lienCompetence.competence.code}}</h1>
+      </ion-col>
+
+      <ion-col size="12" class="objStaPrecElementCompetence">
+        <ion-row>
+          <ion-col size-md="6" size-xs="12" size-xl="4" class="objectif">
+            <ion-row class="titreSection">
+              <h2>Objectif</h2>
+            </ion-row>
+            <ion-row class="affichePasSousXl">
+              <h3>Élément de compétence</h3>
+            </ion-row>
+          </ion-col>
+          <ion-col size-md="6" size-xs="12" size-xl="4" class="objectif">
+            <ion-row class="titreSection">
+              <h2>Standard</h2>
+            </ion-row>
+            <ion-row class="affichePasSousXl">
+              <h3>Critères de performance</h3>
+            </ion-row>
+          </ion-col>
+          <ion-col size-md="6" size-xs="12" size-xl="4" class="objectif">
+            <ion-row class="titreSection">
+              <h2>Précision sur le contenu</h2>
+            </ion-row>
+            <ion-row class="affichePasSousXl">
+              <h3>Contenu local</h3>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="12">
+        <ion-row *ngFor="let elementCompetence of lienCompetence.competence.elementsCompetences" class="elementCompetence">
+          <ion-col size-md="6" size-xs="12" size-xl="4" class="objectif">
+<!--            <ion-row class="titreSection enleverDeuxiemePlus">-->
+<!--              <h1>Objectif</h1>-->
+<!--            </ion-row>-->
+            <ion-row>
+              <ion-col size-xs="12">
+                <ion-row class="sousTitre affichePasXl">
+                  Élément de compétence
+                </ion-row>
+                <ion-row class="codeAffichage">
+                  {{elementCompetence.numero}} {{elementCompetence.texte}}
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col size-md="6" size-xs="12" size-xl="4" class="standard">
+<!--            <ion-row class="titreSection enleverDeuxiemePlus">-->
+<!--              <h1>Standard</h1>-->
+<!--            </ion-row>-->
+            <ion-row>
+              <ion-col class="sousTitre affichePasXl">
+                Critères de performance
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ul class="cards">
+                  <li *ngFor="let critere of elementCompetence.criteresPerformance" class="criterePerformance">{{critere.texte}}</li>
+                </ul>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+
+          <ion-col class="contexteLocal" size-xs="12"  size-xl="4">
+            <ion-row>
+              <ion-col size-md="9" size-xs="12" size-xl="12">
+                <ion-row class="sousTitre affichePasXl">
+                  <ion-col size="12">
+                    Contenu local
+                  </ion-col>
+                </ion-row>
+
+                <div *ngFor="let elementCompetenceContenuLocal of planCadre?.elementsCompetences ">
+                  <ion-row *ngIf="elementCompetenceContenuLocal.elementCompetence.id === elementCompetence.id">
+                    <ion-col>
+                      <ion-col>
+                        {{elementCompetenceContenuLocal.contenuLocal}}
+                      </ion-col>
+                    </ion-col>
+                  </ion-row>
+                </div>
+
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+
+
+</section>
+

@@ -1,0 +1,16 @@
+/*
+Classes CSS permettant de centrer le contenu du modal
+@author Jonathan Carrière (
+*/
+.centrerModal {
+  font-size: 20px;
+  position:absolute;
+  text-align: center;
+  top:45%;
+}
+
+.centrerContenu {
+  width:100%;
+  display: flex;
+  justify-content: center;
+}

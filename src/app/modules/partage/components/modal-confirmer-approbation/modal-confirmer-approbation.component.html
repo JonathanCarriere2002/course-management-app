@@ -1,0 +1,31 @@
+<!--
+  Modal permettant de confirmer l'approbation
+  @author Jonathan Carrière
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Approbation</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="centrerModal">
+  <ion-row class="centrerInput">
+    <ion-col size="11">
+      <ion-text>{{ message }}</ion-text>
+    </ion-col>
+    <ion-col size="8" class="colonneDate">
+      <ion-input class="inputDate" label="Date d'approbation :" labelPlacement="stacked" type="date" required="true" [value]="dateInitiale" (ionChange)="updateDateChoisie($event)"></ion-input>
+      <ion-text class="messageErreur" *ngIf="!validationDateChoisie()">La date choisie doit être égale ou ultérieure à la date actuelle</ion-text>
+    </ion-col>
+  </ion-row>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="cancel()" color="danger">Annuler</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="validationDateChoisie()" (click)="confirm()" [strong]="true">Approuver</ion-button>
+      <ion-button *ngIf="!validationDateChoisie()" (click)="confirm()" [strong]="true" [disabled]="true">Approuver</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
